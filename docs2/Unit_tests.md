@@ -15,13 +15,13 @@ Unit tests are important for several reasons:
 
 There are many types of tests that are commonly used in software development. Here are some of the most common types:
 
-- Unit Tests: Used to test individual units or components of the codebase.
-- Integration Tests: Used to test the integration between different units or components of the codebase.
-- Functional Tests: Used to test the functionality of the software from the user's perspective.
-- Acceptance Tests: Used to test whether the software meets the acceptance criteria.
-- Regression Tests: Used to ensure that changes to the software do not introduce new bugs or break existing functionality.
-- Performance Tests: Used to test the software's performance under specific conditions.
-- Security Tests: Used to test the software's security and identify vulnerabilities or weaknesses in the system.
+- **Unit Tests:** Used to test individual units or components of the codebase.
+- **Integration Tests:** Used to test the integration between different units or components of the codebase.
+- **Functional Tests:** Used to test the functionality of the software from the user's perspective.
+- **Acceptance Tests:** Used to test whether the software meets the acceptance criteria.
+- **Regression Tests:** Used to ensure that changes to the software do not introduce new bugs or break existing functionality.
+- **Performance Tests:** Used to test the software's performance under specific conditions.
+- **Security Tests:** Used to test the software's security and identify vulnerabilities or weaknesses in the system.
 
 The specific types of tests that are used will depend on the nature of the software being developed and the requirements of the project.
 
@@ -116,4 +116,4 @@ int main() {
     free(h_B);
     free(h_C);
 }
-```
+````
