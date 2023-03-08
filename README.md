@@ -1,10 +1,19 @@
-- 👋 Hi, I’m @miquelflorensa
-- 👀 I’m interested in ...
-- 🌱 I’m currently learning ...
-- 💞️ I’m looking to collaborate on ...
-- 📫 How to reach me ...
+<!-------------------------------------------------------------------
+File:         tutorial.md
+Description:  FNN tutorial with 1D data
+Authors:      Miquel Florensa & Luong-Ha Nguyen & James-A. Goulet
+Created:      March 04, 2023
+Updated:      March 04, 2023
+Contact:      miquelflorensa11@gmail.com & luongha.nguyen@gmail.com & james.goulet@polymtl.ca
+Copyright (c) 2023 Miquel Florensa & Luong-Ha Nguyen & James-A. Goulet. Some rights reserved.
+-------------------------------------------------------------------->
 
-<!---
-miquelflorensa/miquelflorensa is a ✨ special ✨ repository because its `README.md` (this file) appears on your GitHub profile.
-You can click the Preview link to take a look at your changes.
---->
+# Headline
+
+
+> An awesome project.
+[Tutorial](tutorial.md)
+
+
+> About cuTAGI
+[About cuTAGI](about.md)

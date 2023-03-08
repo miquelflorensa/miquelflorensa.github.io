@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport"
+    content="width=device-width, initial-scale=1, minimum-scale=1.0, shrink-to-fit=no, viewport-fit=cover">
+  <meta name="description" content="">
+  <title>cuTAGI Tutorial</title>
+
+  <head>
+    <link rel="shortcut icon" type="image/x-icon" href="./images/logo_v2.png" />
+  </head>
+
+  <!-- Themes (light + dark) -->
+  <link rel="stylesheet" media="(prefers-color-scheme: dark)" href="./styles/theme-simple-dark.css">
+  <link rel="stylesheet" media="(prefers-color-scheme: light)" href="./styles/theme-simple.css">
+
+  <!-- Custom Styles -->
+  <style>
+    :root {
+      /* --theme-hue: 325; */
+
+    }
+  </style>
+</head>
+
+<body>
+  <div id="app">Loading ...</div>
+
+  <script>
+
+    // Docsify Configuration
+    window.$docsify = {
+      loadSidebar: true,
+      subMaxLevel: 2,
+      plugins: [
+        function pageFooter(hook, vm) {
+          var footer = [
+            '<hr/>',
+            '<footer>',
+            '<span>Contact: ',
+            '<a href="mailto:miquelflorensa11@gmail.com">miquel.florensa</a>, ',
+            '<a href="mailto:luongha.nguyen@gmail.com">luongha.nguyen</a>, ',
+            '<a href="mailto:james.goulet@polymtl.ca">james.goulet</a></span><br>',
+            '<span><a href="https://github.com/lhnguyen102/cuTAGI"> cuTAGI</a></span>',
+            '<span> &copy; 2023 Miquel Florensea & Luong-Ha Nguyen & James-A. Goulet. Some rights reserved.</span>',
+            '</footer>',
+          ].join('');
+
+          hook.afterEach(function (html) {
+            return html + footer;
+          });
+        },
+
+        function pageHeader(hook, vm) {
+          var navbar = [
+            '<ul class="navbar">',
+            '<li class="navbar"><a href="./"><img src="./images/bayeswork_v2.jpg" href="./" alt="bayeswork" height="30"></a></li>',
+            '<li class="navbar"><a class="navbar" href="default.asp">Home</a></li>',
+            '<li class="navbar"><a class="navbar" href="news.asp">News</a></li>',
+            '<li class="navbar"><a class="navbar" href="contact.asp">Contact</a></li>',
+            '<li class="navbar"><a class="navbar" href="about.asp">About</a></li>',
+            '</ul>'
+          ].join('');
+
+          hook.afterEach(function (html) {
+            return navbar + html;
+          });
+        }
+      ]
+    }
+  </script>
+
+  <!-- Required -->
+  <script src="./assets/docsify.min.js"></script>
+  <script src="./assets/docsify-themeable.min.js"></script>
+
+  <!-- Recommended -->
+  <script src="./assets/search.js"></script>
+  <script src="./assets/zoom-image.min.js"></script>
+
+  <!-- Adding python syntax highlighting -->
+  <script src="./assets/prism-python.js"></script>
+</body>
+
+</html>
