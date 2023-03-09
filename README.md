@@ -8,12 +8,14 @@ Contact:      miquelflorensa11@gmail.com & luongha.nguyen@gmail.com & james.goul
 Copyright (c) 2023 Miquel Florensa & Luong-Ha Nguyen & James-A. Goulet. Some rights reserved.
 -------------------------------------------------------------------->
 
-# Headline
+# Home Page
+
+> cuTAGI is an open-source library that implements TAGI on CUDA platform. It supports various neural network architectures such as fully-connected, convolutional, transpose convolutional layers, skip connections, pooling layers, normalization layers etc.
 
 
-> An awesome project.
-[Tutorial](tutorial.md)
+Some links:
 
+- [Install](guide/install.md)
+- [Quick Tutorial](guide/quick-tutorial.md)
 
-> About cuTAGI
-[About cuTAGI](about.md)
+- [About cuTAGI](about.md)

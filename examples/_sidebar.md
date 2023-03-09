@@ -1,0 +1,6 @@
+  - [**FNN examples**](examples/fnn/fnn-examples.md)
+    - [1D toy examples](guide/quick-tutorial.md)
+    - [2D toy examples](examples/fnn/2d-toy-example.md)
+  - [**CNN examples**](examples/cnn/cnn-examples.md)
+  - [**LSTM examples**](examples/lstm/lstm-examples.md)
+  - [**Autoloader examples**](examples/ae/autoloader-examples.md)
