@@ -1,3 +1,4 @@
+- [**Home**](/)
 - [About cuTAGI](about.md)  
 - [Our Team](team.md)
 - [Contribuiting to cuTAGI](contributing.md)

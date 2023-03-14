@@ -1,5 +1,7 @@
 # API
 
-- [models](api/models.md)
-- [data_loader](api/data_loader.md)
-- [regression](api/regression.md)
+!> *None of these API's are documented yet. This is a work in progress.*
+
+  - [Metrics](api/metrics.md)
+  - [TAGI Network](api/network.md)
+  - [TAGI Utils](api/utils.md)

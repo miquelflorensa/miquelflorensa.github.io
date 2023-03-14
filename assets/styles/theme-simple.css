@@ -16,25 +16,32 @@ li.navbar {
 }
 
 li.navbar a.navbar {
-    display: block;
+    display: inline-block;
+    position: relative;
     color: rgb(0, 0, 0);
     text-align: center;
-    padding: 14px 16px;
+    padding: 10px 16px;
     text-decoration: none;
 }
 
-/* Change the link color to #111 (black) on hover */
-li.navbar a:hover {
-    /*background-color: #757575;*/
+li.navbar a.navbar::after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    transform: scaleX(0);
+    height: 2px;
+    bottom: 0;
+    left: 0;
+    background-color: #0087ca;
+    transform-origin: bottom right;
+    transition: transform 0.25s ease-out;
 }
 
-li.navbar a.active {
-    /*background-color: #4CAF50;*/
+li.navbar a.navbar:hover::after {
+    transform: scaleX(1);
+    transform-origin: bottom left;
 }
 
-li.navbar:hover {
-    border-bottom: 2px solid rgb(43, 109, 189);
-}
 
 
 li.navbar a img {
@@ -43,3 +50,20 @@ li.navbar a img {
     outline: 0;
     border: 0;
 }
+
+.github-link {
+    display: flex;
+    align-items: center;
+}
+  
+.github-icon-container {
+    margin-right: 10px; /* add some spacing between the icon and text */
+}
+
+.github-text-container {
+    color: #0087ca;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+  

@@ -10,7 +10,7 @@ Copyright (c) 2023 Miquel Florensa & Luong-Ha Nguyen & James-A. Goulet. Some rig
 
 # Data loader
 
-This class is used to load and process the data. It is used in the [tutorial](tutorial.md) to load the data. It requires to have the data already split into training and test sets and in csv format.
+This class is used to load and process the data. It is used in the [tutorial](guide/quick-tutorial.md) to load the data. It requires to have the data already split into training and test sets and in csv format.
 
 ```python
 ###############################################################################

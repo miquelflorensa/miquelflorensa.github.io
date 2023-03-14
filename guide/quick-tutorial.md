@@ -28,18 +28,18 @@ y_test_file = "./data/toy_example/y_test_1D.csv"
 
 ## Build Regression Model
 
-We will use a FNN with a simple architecture. We will use the RegressionMLP class already defined and consistent with this basic regression problem (you can find the class implementation [here](models?id=regression-mlp-class)).
+We will use a FNN with a simple architecture. We will use the RegressionMLP class already defined and consistent with this basic regression problem (you can find the class implementation [here](modules/models?id=regression-mlp-class)).
 
 ```python
 # Model
 net_prop = RegressionMLP()
 ```
 
-If you want to use a different model, you can define your own class and make sure that it inherits from the NetProp class, more information in [models page](models.md).
+If you want to use a different model, you can define your own class and make sure that it inherits from the NetProp class, more information in [models page](modules/models?id=mlp-generic-class).
 
 ## Data loader
 
-We will make use of the [RegressionDataLoader](data_loader.md) class to load and process the data. The *process_data* function requires the input and output test and training files in a **csv** format.
+We will make use of the [RegressionDataLoader](modules/data-loader.md) class to load and process the data. The *process_data* function requires the input and output test and training files in a **csv** format.
 
 ```python
 # Data loader
@@ -55,7 +55,7 @@ data_loader = reg_data_loader.process_data(x_train_file=x_train_file,
 
 ## Train and test the model
 
-Using the [regression class](regression.md) that makes use of TAGI, we will train and test the model. In order to perform the task we will also need to specify the number of epochs.
+Using the [regression class](modules/regression?id=regression-class) that makes use of TAGI, we will train and test the model. In order to perform the task we will also need to specify the number of epochs.
 
 ```python
 # Optional: Visualize the test using visualizer.py

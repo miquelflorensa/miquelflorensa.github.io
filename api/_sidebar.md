@@ -1,9 +1,5 @@
-- [**pyTAGI API**](api/api.md)
-  
-  - [Models](api/models.md)
-  - [Dataloader](api/data_loader.md)
-  - [Regression](api/regression.md)
-  - [Classification](api/classification.md)
-  - [Time Series Forecaster](api/time_series_forecaster.md)
-  - [Autoencoder](api/autoencoder.md)
+- pyTAGI API
 
+  - [Metrics](api/metrics.md)
+  - [TAGI Network](api/network.md)
+  - [TAGI Utils](api/utils.md)
