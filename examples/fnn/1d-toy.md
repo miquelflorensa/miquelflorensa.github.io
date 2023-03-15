@@ -1,4 +1,4 @@
-# 1D toy regression problem with heteroscedasticity
+# 1D toy regression problem 
 
 **Author:** [Miquel Florensa](https://www.linkedin.com/in/miquel-florensa-630669182/)  
 **Date:** 2023/03/15  
@@ -96,8 +96,8 @@ reg_task.predict(std_factor=3)
 
 ## 7. Visualize the results
 
-> MSE           :  1026.14
-> Log-likelihood: -5.89
+> MSE           :  1026.14  
+> Log-likelihood: -5.89  
 
 ?> If you have created the visualizarion object and passed it to the regression object, a new window will pop up with the results.
 
