@@ -1,10 +1,10 @@
 # 1D toy regression problem with heteroscedasticity
 
 **Author:** [Miquel Florensa](https://www.linkedin.com/in/miquel-florensa-630669182/)  
-**Date:** 2023/03/14  
-**Description:** This example shows how to solve a 1D toy regression problem with heteroscedasticity using a FNN.  
+**Date:** 2023/03/15  
+**Description:** This example shows how to use the a simple feedforward neural network to solve a 1D toy regression problem.  
 
-<a href="https://github.com/lhnguyen102/cuTAGI/blob/main/python_examples/heteros_regression_runner.py" class="github-link">
+<a href="https://github.com/lhnguyen102/cuTAGI/blob/main/python_examples/regression_runner.py" class="github-link">
   <div class="github-icon-container">
     <img src="../../images/GitHub-Mark.png" alt="GitHub" height="32" width="64">
   </div>
@@ -21,7 +21,7 @@
 from visualizer import PredictionViz
 
 from python_examples.data_loader import RegressionDataLoader
-from python_examples.model import HeterosMLP
+from python_examples.model import RegressionMLP
 from python_examples.regression import Regression
 ```
 
@@ -34,10 +34,10 @@ from python_examples.regression import Regression
 num_inputs = 1
 num_outputs = 1
 num_epochs = 50
-x_train_file = "./data/toy_example/x_train_1D_noise_inference.csv"
-y_train_file = "./data/toy_example/y_train_1D_noise_inference.csv"
-x_test_file = "./data/toy_example/x_test_1D_noise_inference.csv"
-y_test_file = "./data/toy_example/y_test_1D_noise_inference.csv"
+x_train_file = "./data/toy_example/x_train_1D.csv"
+y_train_file = "./data/toy_example/y_train_1D.csv"
+x_test_file = "./data/toy_example/x_test_1D.csv"
+y_test_file = "./data/toy_example/y_test_1D.csv"
 ```
 
 **You can find the used data in the [toy_example data](https://github.com/lhnguyen102/cuTAGI/tree/main/data/toy_example) in the repository.*
@@ -46,10 +46,10 @@ y_test_file = "./data/toy_example/y_test_1D_noise_inference.csv"
 
 ```python
 # Model
-net_prop = HeterosMLP()
+net_prop = RegressionMLP()
 ```
 
-> Find out more about the [HeterosMLP class](modules/models?id=heteroscedastic-regression-mlp-class).
+> Find out more about the [RegressionMLP class](modules/models?id=regression-mlp-class).
 
 ## 4. Load the data
 
@@ -70,7 +70,7 @@ data_loader = reg_data_loader.process_data(x_train_file=x_train_file,
 ## 5. Create visualizer
 
 ```python
-viz = PredictionViz(task_name="heteros_regression", data_name="toy1D")
+viz = PredictionViz(task_name="regression", data_name="toy1D")
 ```
 
 > Learn more about  PredictionViz class [here](https://github.com/lhnguyen102/cuTAGI/blob/main/visualizer.py).
@@ -91,16 +91,16 @@ reg_task = Regression(num_epochs=num_epochs,
 ```python
 reg_task.train()
 
-reg_task.predict()
+reg_task.predict(std_factor=3)
 ```
 
 ## 7. Visualize the results
 
-> MSE           :  2.10  
-> Log-likelihood: -0.15
+> MSE           :  1026.14
+> Log-likelihood: -5.89
 
 ?> If you have created the visualizarion object and passed it to the regression object, a new window will pop up with the results.
 
-![1D toy regression heteroscedastic problem](../../images/1D_toy_regression_heteros.png)
+![1D toy regression problem](../../images/1D_toy_regression.png)
 
 **The black line is the true function, the red line is the predicted function and the red zone is the confidence intervals.*
