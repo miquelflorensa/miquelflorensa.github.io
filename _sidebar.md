@@ -1,5 +1,3 @@
 - [**Home**](/)
-- [About cuTAGI](about.md)  
+- [About py/cuTAGI](about.md)  
 - [Our Team](team.md)
-- [Contribuiting to cuTAGI](contributing.md)
-- [Why choose TAGI?](why.md)
