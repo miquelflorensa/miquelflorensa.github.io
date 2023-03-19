@@ -63,7 +63,7 @@ class MLP(NetProp):
 
 ## Regression MLP class
 
-The regression model will have 1 input layer, 1 hidden layer and 1 output layer. The input layer will have 1 neuron, the hidden layer will have 50 neurons and the output layer will have 1 neuron. The activation function of the hidden layer will be ReLU and the batch size will be 4. The observation noise's standard deviation and its minimum will be 0.06.
+This simple model has one input layer, one hidden layer and one output layer. The input layer will have a single variable, the hidden layer will have 50 hidden units and the output layer will have one variable. The activation function of the hidden layer will be ReLU and the batch size will be four. The observation noise's standard deviation and its minimum will be 0.06. When one wich to use a scheduler to decrease `sigma_v` over epochs, `sigma_v_min` should be choosen to be smaller than `sigma_v` (Note: this is commonly the case for CNN).
 
 ```python
 # Model
@@ -74,13 +74,13 @@ class RegressionMLP(NetProp):
 
     def __init__(self) -> None:
         super().__init__()
-        self.layers = [1, 1, 1]
-        self.nodes = [1, 50, 1]
-        self.activations = [0, 4, 0]
-        self.batch_size = 4
-        self.sigma_v = 0.06
-        self.sigma_v_min: float = 0.06
-        self.device = "cpu"
+        self.layers = [1, 1, 1]         # [input layer,  hidden layer,       output layer]
+        self.nodes = [1, 50, 1]         # [#inputs,      #hidden units,      #outputs    ]
+        self.activations = [0, 4, 0]    # [~,            ReLU activation,    ~           ]
+        self.batch_size = 4             # Number of observation per batch
+        self.sigma_v = 0.06             # Observation error's standard deviation
+        self.sigma_v_min: float = 0.06  # Min. observation error's std for the scheduler
+        self.device = "cpu"             # CPU computations
 ```
 
 ## Heteroscedastic Regression MLP class
