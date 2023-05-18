@@ -103,8 +103,8 @@ reg_task.predict()
 
 At the end of the execution the results will be printed in the console as seen below.
 
-> MSE           :  2.10  
-> Log-likelihood: -0.15
+> MSE           :  452.34  
+> Log-likelihood: -446.42
 
 ?> If you have created the visualizarion object and passed it to the regression object, a new window will pop up with the results.
 

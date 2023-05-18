@@ -12,6 +12,6 @@
 
 [LSTM examples](examples/lstm/lstm-examples.md)
 
-## Autoloader examples
+## Autoencoders examples
 
-[Autoloader examples](examples/ae/autoloader-examples.md)
+[Autoencoders examples](examples/ae/autoencoders-examples.md)

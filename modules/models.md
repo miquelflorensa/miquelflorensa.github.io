@@ -104,6 +104,29 @@ class HeterosMLP(NetProp):
         self.device: str = "cpu"
 ```
 
+## Full-Covariance Regression MLP class
+
+```python
+
+class FullCovMLP(NetProp):
+    """Multi-layer perceptron for performing full-covariance prediction and
+     inference"""
+
+    def __init__(self) -> None:
+        super().__init__()
+        self.layers: list = [1, 1, 1, 1]
+        self.nodes: list = [1, 30, 30, 1]
+        self.activations: list = [0, 4, 4, 0]
+        self.batch_size: int = 10
+        self.sigma_v: float = 0.5
+        self.sigma_v_min: float = 0.065
+        self.decay_factor_sigma_v: float = 0.95
+        self.sigma_x: float = 0.3485
+        self.is_full_cov: bool = True
+        self.multithreading: bool = True
+        self.device: str = "cpu"
+```
+
 ## Derivative Regression MLP class
 
 ```python
@@ -146,6 +169,85 @@ class MnistMLP(NetProp):
         self.is_idx_ud = True
         self.multithreading = True
         self.device = "cpu"
+```
+
+## 2 CONV. MNIST Classification MLP class
+
+```python
+class ConvMLP(NetProp):
+    """Multi-layer perceptron for mnist classificaiton using CNN with 2 
+    convolutional layers."""
+
+    def __init__(self) -> None:
+        super().__init__()
+        self.layers =       [2,     2,      4,      2,      4,      1,      1]
+        self.nodes =        [784,   0,      0,      0,      0,     20,     11]
+        self.kernels =      [4,     3,      5,      3,      1,      1,      1]
+        self.strides =      [1,     2,      1,      2,      0,      0,      0]
+        self.widths =       [28,   27,     13,      9,      4,      1,      1]
+        self.heights =      [28,   27,     13,      9,      4,      1,      1]
+        self.filters =      [1,    32,     32,     64,     64,    150,      1]
+        self.pads =         [1,     0,      0,      0,      0,      0,      0]
+        self.pad_types =    [1,     0,      0,      0,      0,      0,      0]
+        self.activations =  [0,     4,      0,      4,      0,      4,     12]
+        self.batch_size = 16
+        self.sigma_v = 1
+        self.is_idx_ud = True
+        self.multithreading = True
+        self.device = "cuda"
+```
+
+## BATCH NORMALIZATION MLP class
+
+```python
+class ConvBatchNormMLP(NetProp):
+    """Multi-layer perceptron for mnist classificaiton using CNN with batch 
+    normalization."""
+
+    """TODO: This class is not yet implemented."""
+
+    def __init__(self) -> None:
+        super().__init__()
+        self.layers =       [2,     2,      6,      4,      2,      6,      4,      1,      1]
+        self.nodes =        [784,   0,      0,      0,      0,      0,      0,    150,     11]
+        self.kernels =      [4,     3,      1,      5,      3,      1,      1,      1,      1]
+        self.strides =      [1,     1,      1,      2,      1,      1,      2,      0,      0]
+        self.widths =       [28,   27,     27,     13,      9,      9,      4,      1,      1]
+        self.heights =      [28,   27,     27,     13,      9,      9,      4,      1,      1]
+        self.filters =      [1,    32,     32,     32,     64,     64,     64,      0,      1]
+        self.pads =         [0,     1,      0,      0,      0,      0,      0,      0,      0]
+        self.pad_types =    [0,     1,      0,      0,      0,      0,      0,      0,      0]
+        self.activations =  [0,     4,      0,      0,      4,      0,      0,      4,     12]
+        self.batch_size = 16
+        self.sigma_v = 1
+        self.is_idx_ud = True
+        self.multithreading = True
+        self.device = "cpu"
+```
+
+## 3 CONV CIFAR10 Classification MLP class
+
+```python
+class ConvCifarMLP(NetProp):
+    """Multi-layer perceptron for cifar classificaiton."""
+
+    def __init__(self) -> None:
+        super().__init__()
+        self.layers =       [2,     2,      4,      2,      4,      2,      4,      1,      1]
+        self.nodes =        [3072,  0,      0,      0,      0,      0,      0,     64,     11]
+        self.kernels =      [3,     5,      3,      5,      3,      5,      3,      1,      1]
+        self.strides =      [1,     1,      2,      1,      2,      1,      2,      0,      0]
+        self.widths =       [32,   32,     16,     16,      8,      8,      4,      1,      1]
+        self.heights =      [32,   32,     16,     16,      8,      8,      4,      1,      1]
+        self.filters =      [3,    32,     32,     32,     32,     64,     64,     64,      1]
+        self.pads =         [0,     1,      1,      1,      1,      1,      1,      0,      0]
+        self.pad_types =    [0,     2,      1,      2,      1,      2,      1,      0,      0]
+        self.activations =  [0,     4,      0,      4,      0,      4,      0,      4,     12]
+        self.batch_size = 16
+        self.sigma_v = 1
+        self.is_idx_ud = True
+        self.multithreading = True
+        self.device = "cuda"
 ```
 
 ## LSTM for Time Series Forecasting

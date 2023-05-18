@@ -2,6 +2,34 @@
 
 /*# sourceMappingURL=theme-simple.css.map */
 
+body {
+    line-height: 1.5;
+}
+
+h2 {
+    margin-top: 0.8em !important;
+    margin-bottom: 0.5em !important;
+}
+
+pre {
+    margin-bottom: 0em !important;
+}
+
+p.warn {
+    margin-top: 1.5em !important;
+}
+
+blockquote {
+    margin-top: 0.8em !important;
+    margin-bottom: 0.8em !important;
+    padding: 0.8em !important;
+}
+
+pre code {
+    padding: 0.8em !important;
+    margin: 0 !important;
+}
+
 ul.navbar {
     list-style-type: none;
     margin: 0;

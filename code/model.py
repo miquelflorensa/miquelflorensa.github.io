@@ -3,43 +3,12 @@
 # Description:  Diffrent example how to build a model in pytagi
 # Authors:      Luong-Ha Nguyen & James-A. Goulet
 # Created:      October 12, 2022
-# Updated:      November 26, 2022
+# Updated:      Marche 12, 2023
 # Contact:      luongha.nguyen@gmail.com & james.goulet@polymtl.ca
 # Copyright (c) 2022 Luong-Ha Nguyen & James-A. Goulet. Some rights reserved.
 ###############################################################################
 from pytagi import NetProp
-from typing import Union
 
-
-class MLP(NetProp):
-    """Multi-layer perceptron"""
-
-    def __init__(self, 
-                 layers: list, 
-                 nodes: list, 
-                 activations: list,
-                 batch_size: int, 
-                 sigma_v: Union[float , None] = None, 
-                 sigma_v_min: Union[float, None] = None,
-                 noise_type: Union[str, None] = None,
-                 noise_gain: Union[float, None] = None,
-                 init_method: Union[str, None] = "He",
-                 device: Union[str, None] = "cpu") -> None:
-        super().__init__()
-        self.layers = layers
-        self.nodes = nodes
-        self.activations = activations
-        self.batch_size = batch_size
-        if sigma_v is not None:
-            self.sigma_v = sigma_v
-        if sigma_v_min is not None:
-            self.sigma_v_min = sigma_v_min
-        if noise_type is not None:
-            self.noise_type = noise_type
-        if noise_gain is not None:
-            self.noise_gain = noise_gain
-        self.init_method: init_method
-        self.device = device
 
 class RegressionMLP(NetProp):
     """Multi-layer perceptron for regression task"""
@@ -122,10 +91,93 @@ class MnistMLP(NetProp):
         super().__init__()
         self.layers = [1, 1, 1, 1]
         self.nodes = [784, 100, 100, 11]
-        self.activations = [0, 4, 4, 0]
-        self.batch_size = 10
+        self.activations = [0, 7, 7, 12]
+        self.batch_size = 100
         self.sigma_v = 1
         self.is_idx_ud = True
+        self.multithreading = True
+        self.device = "cpu"
+
+class ConvMLP(NetProp):
+    """Multi-layer perceptron for mnist classificaiton.
+
+    NOTE: The number of hidden states for last layer is 11 because
+    TAGI use the hierarchical softmax for the classification task. 
+    Further details can be found in 
+    https://www.jmlr.org/papers/volume22/20-1009/20-1009.pdf
+    """
+
+    def __init__(self) -> None:
+        super().__init__()
+        self.layers =  	    [2,     2,      4,      2,      4,      1,      1]
+        self.nodes = 	    [784,   0,      0,	    0,      0,    150,     11]
+        self.kernels = 	    [4,     3,      5,      3,      1,      1,      1]
+        self.strides = 	    [1,     1,      2,      1,      2,      0,      0]
+        self.widths =  	    [28,   27,     13,      9,      4,      1,      1]
+        self.heights = 	    [28,   27,     13,      9,      4,      1,      1]
+        self.filters =      [1,    32,     32,     64,     64,      0,      1]
+        self.pads =         [0,     1,      0,      0,      0,      0,      0]
+        self.pad_types =    [0,     1,      0,      0,      0,      0,      0]
+        self.activations =  [0,     4,      0,      4,      0,      4,     12]
+        self.batch_size = 16
+        self.sigma_v = 1
+        self.is_idx_ud = True
+        self.multithreading = True
+        self.device = "cuda"
+
+class ConvBatchNormMLP(NetProp):
+    """Multi-layer perceptron for mnist classificaiton."""
+
+    def __init__(self) -> None:
+        super().__init__()
+        self.layers =  	    [2,     2,      6,      4,      2,      6,      4,      1,      1]
+        self.nodes = 	    [784,   0,      0,      0,      0,      0,      0,    150,     11]
+        self.kernels = 	    [4,     3,      1,      5,      3,      1,      1,      1,      1]
+        self.strides = 	    [1,     1,      1,      2,      1,      1,      2,      0,      0]
+        self.widths =  	    [28,   27,     27,     13,      9,      9,      4,      1,      1]
+        self.heights = 	    [28,   27,     27,     13,      9,      9,      4,      1,      1]
+        self.filters =      [1,    32,     32,     32,     64,     64,     64,      0,      1]
+        self.pads =         [0,     1,      0,      0,      0,      0,      0,      0,      0]
+        self.pad_types =    [0,     1,      0,      0,      0,      0,      0,      0,      0]
+        self.activations =  [0,     4,      0,      0,      4,      0,      0,      4,     12]
+        self.batch_size = 16
+        self.sigma_v = 1
+        self.is_idx_ud = True
+        self.multithreading = True
+        self.device = "cuda"
+
+class ConvCifarMLP(NetProp):
+    """Multi-layer perceptron for cifar classificaiton."""
+
+    def __init__(self) -> None:
+        super().__init__()
+        self.layers =  	    [2,     2,      4,      2,      4,      2,      4,      1,      1]
+        self.nodes = 	    [3072,  0,      0,      0,      0,      0,      0,     64,     11]
+        self.kernels = 	    [3,     5,      3,      5,      3,      5,      3,      1,      1]
+        self.strides = 	    [1,     1,      2,      1,      2,      1,      2,      0,      0]
+        self.widths =  	    [32,   32,     16,     16,      8,      8,      4,      1,      1]
+        self.heights = 	    [32,   32,     16,     16,      8,      8,      4,      1,      1]
+        self.filters =      [3,    32,     32,     32,     32,     64,     64,     64,      1]
+        self.pads =         [0,     1,      1,      1,      1,      1,      1,      0,      0]
+        self.pad_types =    [0,     2,      1,      2,      1,      2,      1,      0,      0]
+        self.activations =  [0,     4,      0,      4,      0,      4,      0,      4,     12]
+        self.batch_size = 16
+        self.sigma_v = 1
+        self.is_idx_ud = True
+        self.multithreading = True
+        self.device = "cuda"
+
+class SoftmaxMnistMLP(NetProp):
+    """Multi-layer perceptron for mnist classificaiton."""
+
+    def __init__(self) -> None:
+        super().__init__()
+        self.layers = [1, 1, 1, 1]
+        self.nodes = [784, 100, 100, 10]
+        self.activations = [0, 4, 4, 11]
+        self.batch_size = 10
+        self.sigma_v = 2
+        self.is_idx_ud = False
         self.multithreading = True
         self.device = "cpu"
 

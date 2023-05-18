@@ -268,3 +268,54 @@ class TimeSeriesDataloader(DataloaderBase):
         ]
 
         return data_loader
+
+class ClassificationDataloader(DataloaderBase):
+    """Data loader for csv dataset for classification"""
+
+    def __init__(self, batch_size: int) -> None:
+        super().__init__(batch_size)
+
+    def process_data(self, x_train_file: str, y_train_file: str,
+                     x_test_file: str, y_test_file: str) -> dict:
+        """Process data from the csv file"""
+
+        utils = Utils()
+        num_train_images = 50000
+        num_test_images = 10000
+
+        # Load data
+        train_images = self.load_data_from_csv(x_train_file)
+        y_train = self.load_data_from_csv(y_train_file)
+        test_images = self.load_data_from_csv(x_test_file)
+        y_test = self.load_data_from_csv(y_test_file)
+        train_labels = np.argmax(y_train, axis=1)
+        test_labels = np.argmax(y_test, axis=1)
+
+        y_train, y_train_idx, num_enc_obs = utils.label_to_obs(
+        labels=train_labels, num_classes=10)
+        x_mean, x_std = self.normalizer.compute_mean_std(train_images)
+        x_std = 1
+
+        # Normalizer
+        x_train = self.normalizer.standardize(data=train_images,
+                                              mu=x_mean,
+                                              std=x_std)
+        x_test = self.normalizer.standardize(data=test_images,
+                                             mu=x_mean,
+                                             std=x_std)
+
+
+        y_train = y_train.reshape((num_train_images, num_enc_obs))
+        y_train_idx = y_train_idx.reshape((num_train_images, num_enc_obs))
+        x_train = x_train.reshape((num_train_images, 32, 32, 3))
+        x_test = x_test.reshape((num_test_images, 32, 32, 3))
+
+        # Data loader
+        data_loader = {}
+        data_loader["train"] = (x_train, y_train, y_train_idx, train_labels)
+        data_loader["test"] = self.create_data_loader(raw_input=x_test,
+                                                      raw_output=test_labels)
+        data_loader["x_norm_param_1"] = x_mean
+        data_loader["x_norm_param_2"] = x_std
+
+        return data_loader
