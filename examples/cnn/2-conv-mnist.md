@@ -4,7 +4,7 @@
 **Date:** 2023/04/21  
 **Description:** This example shows how to train a convolutional neural network (CNN) to classify the MNIST dataset.
 
-<a href="https://github.com/lhnguyen102/cuTAGI/blob/main/python_examples/classification_runner.py" class="github-link">
+<a href="https://github.com/lhnguyen102/cuTAGI/blob/main/python_examples/2conv_classification_runner.py" class="github-link">
   <div class="github-icon-container">
     <img src="../../images/GitHub-Mark.png" alt="GitHub" height="32" width="64">
   </div>
@@ -92,10 +92,10 @@ Finally, we can train and evaluate the model. We will call the train and predict
 
 In this section we will see the performace of the model using cuTAGI and we will compare the results with the results of a backpropagation model.
 
-| Model | Error Rate [%] |  | Hyperparameters |  |
-| :---: | :---: | :---: | :---: | :---: |
-|       | e = 1 | e = E | E | B |
-| **TAGI** | 1.88 | 0.64 | 50 | 16 |
-| BP | - | 0.67 | 1000 | 128 |
+|  Model   | Error Rate [%] |       | Hyperparameters |       |
+| :------: | :------------: | :---: | :-------------: | :---: |
+|          |     e = 1      | e = E |        E        |   B   |
+| **TAGI** |      2.07      | 0.65  |       50        |  16   |
+|    BP    |       -        | 0.67  |      1000       |  128  |
 
-?> The table above compares the classification accuracy with the results from [Wan et al.](http://proceedings.mlr.press/v28/wan13.pdf) where both approaches use the same CNN architecture with 2 convolutional layers (32-64) and a fully connected layer with 150 hidden units. 
+?> The table above compares the classification accuracy with the results from [Wan et al.](http://proceedings.mlr.press/v28/wan13.pdf) where both approaches use the same CNN architecture with 2 convolutional layers (32-64) and a fully connected layer with 150 hidden units.

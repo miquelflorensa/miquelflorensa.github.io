@@ -74,7 +74,6 @@ li.navbar a.navbar:hover::after {
 
 li.navbar a img {
     max-width: 100%;
-    transform: translateY(30%);
     outline: 0;
     border: 0;
 }

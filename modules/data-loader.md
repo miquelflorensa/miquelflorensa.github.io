@@ -18,7 +18,7 @@ This class is used to load and process the data. It is used in the [tutorial](gu
 # Description:  Prepare data for neural networks
 # Authors:      Luong-Ha Nguyen & James-A. Goulet
 # Created:      October 12, 2022
-# Updated:      October 30, 2022
+# Updated:      January 27, 2023
 # Contact:      luongha.nguyen@gmail.com & james.goulet@polymtl.ca
 # Copyright (c) 2022 Luong-Ha Nguyen & James-A. Goulet. Some rights reserved.
 ###############################################################################
@@ -90,7 +90,7 @@ class DataloaderBase(ABC):
     def load_data_from_csv(data_file: str) -> pd.DataFrame:
         """Load data from csv file"""
 
-        data = pd.read_csv(data_file, skiprows=1, delimiter=",", header=None)
+        data = pd.read_csv(data_file, skiprows=0, delimiter=",", header=None)
 
         return data.values
 
@@ -213,6 +213,56 @@ class MnistDataloader(DataloaderBase):
         return data_loader
 
 
+class MnistOneHotDataloader(DataloaderBase):
+    """Data loader for mnist dataset"""
+
+    def process_data(self, x_train_file: str, y_train_file: str,
+                     x_test_file: str, y_test_file: str) -> dict:
+        """Process mnist images"""
+        # Initialization
+        utils = Utils()
+        num_train_images = 60000
+        num_test_images = 10000
+
+        # Traininng set
+        train_images, train_labels = utils.load_mnist_images(
+            image_file=x_train_file,
+            label_file=y_train_file,
+            num_images=num_train_images)
+
+        y_train = utils.label_to_one_hot(labels=train_labels, num_classes=10)
+        x_mean, x_std = self.normalizer.compute_mean_std(train_images)
+        x_std = 1
+
+        # Test set
+        test_images, test_labels = utils.load_mnist_images(
+            image_file=x_test_file,
+            label_file=y_test_file,
+            num_images=num_test_images)
+
+        # Normalizer
+        x_train = self.normalizer.standardize(data=train_images,
+                                              mu=x_mean,
+                                              std=x_std)
+        x_test = self.normalizer.standardize(data=test_images,
+                                             mu=x_mean,
+                                             std=x_std)
+
+        y_train = y_train.reshape((num_train_images, 10))
+        x_train = x_train.reshape((num_train_images, 28, 28))
+        x_test = x_test.reshape((num_test_images, 28, 28))
+
+        # Data loader
+        data_loader = {}
+        data_loader["train"] = (x_train, y_train, train_labels)
+        data_loader["test"] = self.create_data_loader(raw_input=x_test,
+                                                      raw_output=test_labels)
+        data_loader["x_norm_param_1"] = x_mean
+        data_loader["x_norm_param_2"] = x_std
+
+        return data_loader
+
+
 class TimeSeriesDataloader(DataloaderBase):
     """Data loader for time series"""
 
@@ -281,6 +331,57 @@ class TimeSeriesDataloader(DataloaderBase):
         data_loader["datetime_test"] = [
             np.datetime64(date) for date in np.squeeze(datetime_test)
         ]
+
+        return data_loader
+
+class ClassificationDataloader(DataloaderBase):
+    """Data loader for csv dataset for classification"""
+
+    def __init__(self, batch_size: int) -> None:
+        super().__init__(batch_size)
+
+    def process_data(self, x_train_file: str, y_train_file: str,
+                     x_test_file: str, y_test_file: str) -> dict:
+        """Process data from the csv file"""
+
+        utils = Utils()
+        num_train_images = 50000
+        num_test_images = 10000
+
+        # Load data
+        train_images = self.load_data_from_csv(x_train_file)
+        y_train = self.load_data_from_csv(y_train_file)
+        test_images = self.load_data_from_csv(x_test_file)
+        y_test = self.load_data_from_csv(y_test_file)
+        train_labels = np.argmax(y_train, axis=1)
+        test_labels = np.argmax(y_test, axis=1)
+
+        y_train, y_train_idx, num_enc_obs = utils.label_to_obs(
+        labels=train_labels, num_classes=10)
+        x_mean, x_std = self.normalizer.compute_mean_std(train_images)
+        x_std = 1
+
+        # Normalizer
+        x_train = self.normalizer.standardize(data=train_images,
+                                              mu=x_mean,
+                                              std=x_std)
+        x_test = self.normalizer.standardize(data=test_images,
+                                             mu=x_mean,
+                                             std=x_std)
+
+
+        y_train = y_train.reshape((num_train_images, num_enc_obs))
+        y_train_idx = y_train_idx.reshape((num_train_images, num_enc_obs))
+        x_train = x_train.reshape((num_train_images, 32, 32, 3))
+        x_test = x_test.reshape((num_test_images, 32, 32, 3))
+
+        # Data loader
+        data_loader = {}
+        data_loader["train"] = (x_train, y_train, y_train_idx, train_labels)
+        data_loader["test"] = self.create_data_loader(raw_input=x_test,
+                                                      raw_output=test_labels)
+        data_loader["x_norm_param_1"] = x_mean
+        data_loader["x_norm_param_2"] = x_std
 
         return data_loader
 ```

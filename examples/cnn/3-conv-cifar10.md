@@ -4,7 +4,7 @@
 **Date:** 2023/05/05  
 **Description:** This example shows how to train a convolutional neural network (CNN) to classify the CIFAR10 dataset.
 
-<a href="https://github.com/lhnguyen102/cuTAGI/blob/main/python_examples/classification_runner.py" class="github-link">
+<a href="https://github.com/miquelflorensa/miquelflorensa.github.io/blob/main/code/classification_cifar10_runner.py" class="github-link">
   <div class="github-icon-container">
     <img src="../../images/GitHub-Mark.png" alt="GitHub" height="32" width="64">
   </div>
@@ -44,12 +44,35 @@ y_test_file = "./data/cifar/y_test.csv"
 
 ## 3. Create the model
 
-In this example we will create a model of two convolutional layers, a batch size of 16 and will use hierarchical softmax for the classification task. Find out more about the [ConvCifarMLP class](modules/models?id=_3-conv-cifar10-classification-mlp-class) and all its parameters.
+In this example we will create a model of three convolutional layers, a batch size of 16 and will use hierarchical softmax for the classification task. Find out more about the architecture in [Analytically Tractable Inference in Deep Neural Networks](https://arxiv.org/pdf/2103.05461.pdf).
 
 ```python
-# Model
-net_prop = ConvCifarMLP()
+class ConvCifarMLP(NetProp):
+    """Multi-layer perceptron for cifar classificaiton."""
+
+    def __init__(self) -> None:
+        super().__init__()
+        self.layers =       [2,     2,      4,      2,      4,      2,      4,      1,      1]
+        self.nodes =        [3072,  0,      0,      0,      0,      0,      0,     64,     11]
+        self.kernels =      [5,     3,      5,      3,      5,      3,      1,      1,      1]
+        self.strides =      [1,     2,      1,      2,      1,      2,      0,      0,      0]
+        self.widths =       [32,   32,     16,     16,      8,      8,      4,      1,      1]
+        self.heights =      [32,   32,     16,     16,      8,      8,      4,      1,      1]
+        self.filters =      [3,    32,     32,     32,     32,     64,     64,      1,      1]
+        self.pads =         [2,     1,      2,      1,      2,      1,      0,      0,      0]
+        self.pad_types =    [1,     2,      1,      2,      1,      2,      0,      0,      0]
+        self.activations =  [0,     4,      0,      4,      0,      4,      0,      4,     12]
+        self.batch_size = 16
+        self.sigma_v = 1
+        self.sigma_v_min = 0.3
+        self.decay_factor_sigma_v = 0.975
+        self.is_idx_ud = True
+        self.multithreading = True
+        self.init_method: str = "He"
+        self.device = "cuda"
 ```
+
+![3 conv for cifar10](../../images/architectures/arch-3-cov-cifar.png)
 
 ## 4. Load the data
 

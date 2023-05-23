@@ -1,10 +1,10 @@
-# 1D toy regression problem with heteroscedasticity
+# UCI regression problem with heteroscedasticity
 
 **Author:** [Miquel Florensa](https://www.linkedin.com/in/miquel-florensa/)  
-**Date:** 2023/03/14  
-**Description:** This example shows how to solve a 1D toy regression problem with heteroscedasticity using a FNN.  
+**Date:** 2023/05/23  
+**Description:** This example shows how predict the housing prices in Boston using a FNN with heteroscedasticity.  
 
-<a href="https://github.com/lhnguyen102/cuTAGI/blob/main/python_examples/heteros_regression_runner.py" class="github-link">
+<a href="https://github.com/miquelflorensa/miquelflorensa.github.io/blob/main/code/uci_heteros_regression_runner.py" class="github-link">
   <div class="github-icon-container">
     <img src="../../images/GitHub-Mark.png" alt="GitHub" height="32" width="64">
   </div>
@@ -18,46 +18,57 @@
 ## 1. Setup
 
 ```python
-from visualizer import PredictionViz
-
 from python_examples.data_loader import RegressionDataLoader
-from python_examples.model import HeterosMLP
 from python_examples.regression import Regression
+from pytagi import NetProp
 ```
 
 ?>Notice that this modules are described [here](modules/modules.md) and the source code is in the *python_examples* directory, in case you have the modules in another directory you must change this paths.
 
 ## 2. Prepare the data
 
-In this simple example we will use a 1D toy dataset. The data is generated from a function with a random noise. The goal is to learn the function from the data.
+In this simple example we will use the Boston housing dataset and we will try to predict the housing prices given 13 caracteristics.
 
 ```python
 # User-input
-num_inputs = 1      # 1 explanatory variable
+num_inputs = 13     # 1 explanatory variable
 num_outputs = 1     # 1 predicted output
 num_epochs = 50     # row for 50 epochs
-x_train_file = "./data/toy_example/x_train_1D_noise_inference.csv"
-y_train_file = "./data/toy_example/y_train_1D_noise_inference.csv"
-x_test_file = "./data/toy_example/x_test_1D_noise_inference.csv"
-y_test_file = "./data/toy_example/y_test_1D_noise_inference.csv"
+x_train_file = "./data/UCI/Boston_housing/x_train.csv"
+y_train_file = "./data/UCI/Boston_housing/y_train.csv"
+x_test_file = "./data/UCI/Boston_housing/x_test.csv"
+y_test_file = "./data/UCI/Boston_housing/y_test.csv"
 ```
 
-**You can find the used data in the [toy_example data](https://github.com/lhnguyen102/cuTAGI/tree/main/data/toy_example) in the repository.*
-
-?>We can plot the training data points and the trend line we want to learn.
-
-![1D toy regression problem data](../../images/1D_toy_regression_heteros_data.png)
+**You can find the used data in the [UCI data](https://github.com/lhnguyen102/cuTAGI/tree/main/data/UCI) in the repository.*
 
 ## 3. Create the model
 
-We will use a FNN with a simple architecture as defined in the HeterosMLP class wich is suited for this basic regression problem with heteroscedasticity. Find out more about the [HeterosMLP class](modules/models?id=heteroscedastic-regression-mlp-class).
+We will use a FNN with a simple architecture as defined in the HeterosUCIMLP class wich is suited for this regression problem with heteroscedasticity.
+
+```python
+class HeterosUCIMLP(NetProp):
+    """Multi-layer preceptron for regression task where the
+    output's noise varies overtime"""
+
+    def __init__(self) -> None:
+        super().__init__()
+        self.layers =       [1, 1, 1, 1]
+        self.nodes =        [13, 50, 50, 2]  # output layer = [mean, std]
+        self.activations =  [0, 4, 4, 0]
+        self.batch_size =   10
+        self.sigma_v =      2
+        self.sigma_v_min =  0.3
+        self.noise_gain =   1.0
+        self.noise_type =   "heteros"
+        self.init_method =  "He"
+        self.device =       "cpu"
+```
 
 ```python
 # Model
-net_prop = HeterosMLP()
+net_prop = HeterosUCIMLP()
 ```
-
-> If you want to use a different model, you can create your own class and make sure that it inherits from the NetProp class, more information in [models page](modules/models?id=netprop-class).
 
 ## 4. Load the data
 
@@ -75,39 +86,22 @@ data_loader = reg_data_loader.process_data(x_train_file=x_train_file,
                                            y_test_file=y_test_file)
 ```
 
-## 5. Create visualizer
-
-In order to visualize the predictions of the regression we can use the PredictionViz class. This class will create a window with the true function, the predicted function and the confidence intervals.
-
-```python
-viz = PredictionViz(task_name="heteros_regression", data_name="toy1D")
-```
-
-> Learn more about  PredictionViz class [here](https://github.com/lhnguyen102/cuTAGI/blob/main/visualizer.py).
-
-## 6. Train and evaluate the model
+## 5. Train and evaluate the model
 
 Using the [regression class](modules/regression?id=regression-class) that makes use of TAGI, we will train and test the model. When doing the prediction we can specify the standard deviation factor to calculate the confidence intervals.
 
 ```python
 reg_task = Regression(num_epochs=num_epochs,
                       data_loader=data_loader,
-                      net_prop=net_prop,
-                      viz=viz)
+                      net_prop=net_prop)
 
 reg_task.train()
 reg_task.predict()
 ```
 
-## 7. Visualize the results
+## 6. Results
 
 At the end of the execution the results will be printed in the console as seen below.
 
-> MSE           :  452.34  
-> Log-likelihood: -446.42
-
-?> If you have created the visualizarion object and passed it to the regression object, a new window will pop up with the results.
-
-![1D toy regression heteroscedastic problem](../../images/1D_toy_regression_heteros.png)
-
-**The black line is the true function, the red line is the predicted function and the red zone is the confidence intervals.*
+> MSE           :  4.66  
+> Log-likelihood: -3.84

@@ -2,9 +2,9 @@
 
 **Author:** [Miquel Florensa](https://www.linkedin.com/in/miquel-florensa/)  
 **Date:** 2023/04/24  
-**Description:** This example shows how to train a convolutional neural network (CNN) to classify the MNIST dataset.
+**Description:** This example shows how to train a convolutional neural network (CNN) with batch normalization to classify the MNIST dataset.
 
-<a href="https://github.com/lhnguyen102/cuTAGI/blob/main/python_examples/classification_runner.py" class="github-link">
+<a href="https://github.com/lhnguyen102/cuTAGI/blob/main/python_examples/2conv_bn_classification_runner.py" class="github-link">
   <div class="github-icon-container">
     <img src="../../images/GitHub-Mark.png" alt="GitHub" height="32" width="64">
   </div>
@@ -92,10 +92,10 @@ clas_task.predict()
 
 In this section we will see the performace of the model using cuTAGI and we will compare the results with the results of a backpropagation model.
 
-| Model | Error Rate [%] |  | Hyperparameters |  |
-| :---: | :---: | :---: | :---: | :---: |
-|       | e = 1 | e = E | E | B |
-| **TAGI** | 2.36 | 1.02 | 50 | 16 |
-| BP | - | 0.46 | 300 | 128 |
+|  Model   | Error Rate [%] |       | Hyperparameters |       |
+| :------: | :------------: | :---: | :-------------: | :---: |
+|          |     e = 1      | e = E |        E        |   B   |
+| **TAGI** |      2.13      | 0.96  |       50        |  16   |
+|    BP    |       -        | 0.46  |       300       |  128  |
 
 ?> The table above compares the classification accuracy with the results from [Lei et al.](https://link.springer.com/article/10.1007/s42452-019-1903-4) where both approaches use a similar CNN architecture with 2 convolutional layers (32-64) and a fully connected layer with 150 hidden units in TAGI and 1280 hidden units in BP.
