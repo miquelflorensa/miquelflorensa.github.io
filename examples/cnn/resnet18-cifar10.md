@@ -1,10 +1,10 @@
-# 3-Convolutional CIFAR10
+# ResNet18 CIFAR10
 
 **Author:** [Miquel Florensa](https://www.linkedin.com/in/miquel-florensa/)  
 **Date:** 2023/05/05  
-**Description:** This example shows how to train a convolutional neural network (CNN) to classify the CIFAR10 dataset.
+**Description:** This example shows how to train a residual network to classify the CIFAR10 dataset.
 
-<a href="https://github.com/miquelflorensa/miquelflorensa.github.io/blob/main/code/3conv_cifar10_classification_runner.py" class="github-link">
+<a href="https://github.com/miquelflorensa/miquelflorensa.github.io/blob/main/code/resnet_cifar10_classification_runner.py" class="github-link">
   <div class="github-icon-container">
     <img src="../../images/GitHub-Mark.png" alt="GitHub" height="32" width="64">
   </div>
@@ -23,6 +23,7 @@ We first import the required modules: the classifier, the data loader and the mo
 from python_examples.classification import Classifier
 from python_examples.data_loader import ClassificationDataloader
 from pytagi import NetProp
+
 ```
 
 ?>Notice that this modules are described [here](modules/modules.md) and the source code is in the *python_examples* directory, in case you have the modules in another directory you must change this paths.
@@ -43,27 +44,31 @@ y_test_file = "./data/cifar/y_test.csv"
 
 ## 3. Create the model
 
-In this example we will create a model of three convolutional layers, a batch size of 16 and will use hierarchical softmax for the classification task. Find out more about the architecture in [Analytically Tractable Inference in Deep Neural Networks](https://arxiv.org/pdf/2103.05461.pdf).
+In this example we are going to use a [Resnet18 architecture](https://arxiv.org/pdf/2103.05461.pdf).
+
+!> This is NOT the Resnet18 architecture. This is just a test.
 
 ```python
-class ConvCifarMLP(NetProp):
+class ResnetCifarMLP(NetProp):
     """Multi-layer perceptron for cifar classificaiton."""
 
     def __init__(self) -> None:
         super().__init__()
-        self.layers =       [2,     2,      4,      2,      4,      2,      4,      1,      1]
-        self.nodes =        [3072,  0,      0,      0,      0,      0,      0,     64,     11]
-        self.kernels =      [5,     3,      5,      3,      5,      3,      1,      1,      1]
-        self.strides =      [1,     2,      1,      2,      1,      2,      0,      0,      0]
-        self.widths =       [32,   32,     16,     16,      8,      8,      4,      1,      1]
-        self.heights =      [32,   32,     16,     16,      8,      8,      4,      1,      1]
-        self.filters =      [3,    32,     32,     32,     32,     64,     64,      1,      1]
-        self.pads =         [2,     1,      2,      1,      2,      1,      0,      0,      0]
-        self.pad_types =    [1,     2,      1,      2,      1,      2,      0,      0,      0]
-        self.activations =  [0,     4,      0,      4,      0,      4,      0,      4,     12]
+        #------------------- #Input-----------------#Stage1-------------------------#Stage2-------------------------#Stage3-------------------------#Stage4-------------------------#Output---
+        self.layers =       [2,     2,      4,      2,      4,      2,      4,      2,      4,      2,      4,      1,      1]
+        self.nodes =        [3072,  0,      0,      0,      0,      0,      0,      0,      0,      0,      0,    256,     11]
+        self.kernels =      [7,     1,      3,      1,      3,      1,      3,      1,      3,      1,      3,      1,      1]
+        self.strides =      [1,     0,      1,      0,      1,      0,      1,      0,      1,      0,      1,      0,      0]
+        self.widths =       [128, 128,     64,     64,     32,     32,     16,     16,      8,      8,      4,      1,      1]
+        self.heights =      [128, 128,     64,     64,     32,     32,     16,     16,      8,      8,      4,      1,      1]
+        self.filters =      [3,    32,     32,     32,     32,     64,     64,    128,    128,    256,    256,      1,      1]
+        self.pads =         [0,     1,      0,      1,      0,      1,      0,      1,      0,      1,      0,      1,      0]
+        self.pad_types =    [0,     1,      0,      1,      0,      1,      0,      1,      0,      1,      0,      1,      0]
+        self.activations =  [0,     4,      0,      4,      0,      4,      0,      4,      0,      4,      0,      4,     12]
+        self.shortcuts =    [-1,    3,     -1,      6,     -1,     -1,     -1,      7,     -1,     -1,     -1,     -1,     -1]
         self.batch_size = 16
         self.sigma_v = 1
-        self.sigma_v_min = 0.3
+        self.sigma_v_min = 0.2
         self.decay_factor_sigma_v = 0.975
         self.is_idx_ud = True
         self.multithreading = True
@@ -73,10 +78,8 @@ class ConvCifarMLP(NetProp):
 
 ```python
 # Model
-net_prop = ConvCifarMLP()
+net_prop = ResnetCifarMLP()
 ```
-
-![3 conv for cifar10](../../images/architectures/arch-3-cov-cifar.png)
 
 ## 4. Load the data
 
@@ -121,7 +124,7 @@ In this section we will see the performace of the model using cuTAGI and we will
 |  Model   | Error Rate [%] |       | Hyperparameters |       |
 | :------: | :------------: | :---: | :-------------: | :---: |
 |          |     e = 1      | e = E |        E        |   B   |
-| **TAGI** |     52.71      | 29.66 |       50        |  16   |
-|    BP    |       -        | 23.5  |       150       |  128  |
+| **TAGI** |      65.9      | 13.8  |       50        |  16   |
+|    BP    |       -        | 14.0  |       160       |  128  |
 
-?> The table above compares the classification accuracy with the results from [Wan et al.](http://proceedings.mlr.press/v28/wan13.pdf) where both approaches use the same CNN architecture with 3 convolutional layers (32-16-8) and a fully connected layer with 64 hidden units.
+?> The table above compares the classification accuracy with the results from [Osawa et al.](http://proceedings.mlr.press/v28/wan13.pdf) where both approaches use the same CNN architecture with 3 convolutional layers (32-16-8) and a fully connected layer with 64 hidden units.

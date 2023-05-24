@@ -4,7 +4,7 @@
 **Date:** 2023/04/21  
 **Description:** This example shows how to train a convolutional neural network (CNN) to classify the MNIST dataset.
 
-<a href="https://github.com/lhnguyen102/cuTAGI/blob/main/python_examples/2conv_classification_runner.py" class="github-link">
+<a href="https://github.com/miquelflorensa/miquelflorensa.github.io/blob/main/code/2conv_classification_runner.py" class="github-link">
   <div class="github-icon-container">
     <img src="../../images/GitHub-Mark.png" alt="GitHub" height="32" width="64">
   </div>
