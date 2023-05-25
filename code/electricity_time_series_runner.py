@@ -15,15 +15,12 @@ def main():
     input_seq_len = 5
     output_seq_len = 1
     seq_stride = 1
-    x_train_file = "./data/toy_time_series/x_train_sin_data.csv"
-    datetime_train_file = "./data/toy_time_series/train_sin_datetime.csv"
-    x_test_file = "./data/toy_time_series/x_test_sin_data.csv"
-    datetime_test_file = "./data/toy_time_series/test_sin_datetime.csv"
+    x_train_file =        "./data/UCI/Electricity/x_train_file.csv"
+    datetime_train_file = "./data/UCI/Electricity/datetime_train_file.csv"
+    x_test_file =         "./data/UCI/Electricity/x_test_file.csv"
+    datetime_test_file =  "./data/UCI/Electricity/datetime_test_file.csv"
 
-    ''' 
-    Uncomment this section and the paramaters passing to the time forecaster object in order to charge pretrained parameters.
-    You can generate them by running build/main cfg_time_series_2lstm.txt (and setting load_param to false)
-
+    '''
     # Load pretrained weights and biases
     mw_file = "./saved_param/lstm_demo_2lstm_1_mw.csv"
     Sw_file = "./saved_param/lstm_demo_2lstm_2_Sw.csv"
@@ -62,7 +59,7 @@ def main():
         datetime_test_file=datetime_test_file)
 
     # Visualzier
-    viz = PredictionViz(task_name="forecasting", data_name="sin_signal")
+    viz = PredictionViz(task_name="forecasting", data_name="Global active power")
 
     # Train and test
     reg_task = TimeSeriesForecaster(num_epochs=num_epochs,

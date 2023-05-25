@@ -1,8 +1,8 @@
 from visualizer import PredictionViz
 
-from tutorials.data_loader import RegressionDataLoader
-from tutorials.model import FullCovMLP
-from tutorials.regression import Regression
+from python_examples.data_loader import RegressionDataLoader
+from python_examples.model import FullCovMLP
+from python_examples.regression import Regression
 
 
 def main():

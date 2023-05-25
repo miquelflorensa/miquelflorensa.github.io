@@ -1,9 +1,9 @@
 import numpy as np
 from visualizer import ImageViz
 
-from tutorials.autoencoder import Autoencoder
-from tutorials.data_loader import MnistDataloader
-from tutorials.model import MnistDecoder, MnistEncoder
+from python_examples.autoencoder import Autoencoder
+from python_examples.data_loader import MnistDataloader
+from python_examples.model import MnistDecoder, MnistEncoder
 
 
 def main():

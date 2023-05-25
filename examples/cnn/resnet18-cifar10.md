@@ -44,9 +44,9 @@ y_test_file = "./data/cifar/y_test.csv"
 
 ## 3. Create the model
 
-In this example we are going to use a [Resnet18 architecture](https://arxiv.org/pdf/2103.05461.pdf).
+In this example we are going to use a [Resnet18 architecture](https://arxiv.org/abs/1512.03385).
 
-!> This is NOT the Resnet18 architecture. This is just a test.
+!> This is NOT the full Resnet18 architecture. This is just a test.
 
 ```python
 class ResnetCifarMLP(NetProp):
@@ -127,4 +127,4 @@ In this section we will see the performace of the model using cuTAGI and we will
 | **TAGI** |      65.9      | 13.8  |       50        |  16   |
 |    BP    |       -        | 14.0  |       160       |  128  |
 
-?> The table above compares the classification accuracy with the results from [Osawa et al.](http://proceedings.mlr.press/v28/wan13.pdf) where both approaches use the same CNN architecture with 3 convolutional layers (32-16-8) and a fully connected layer with 64 hidden units.
+?> The table above compares the classification accuracy with the results from [Osawa et al.](https://www.researchgate.net/publication/333650027_Practical_Deep_Learning_with_Bayesian_Principles) where they use a Resnet18 trained with backpropagation.
