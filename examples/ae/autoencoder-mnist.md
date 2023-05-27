@@ -109,7 +109,7 @@ Finally, we can train and evaluate the model. We will call the train and predict
 
 ```python
 ae_task.train()
-ae_task.predict()
+ae_task.predict() d
 ```
 
 ## 8. Results
