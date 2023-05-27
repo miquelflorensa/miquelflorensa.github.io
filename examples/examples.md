@@ -6,12 +6,10 @@
 
 [CNN examples](examples/cnn/cnn-examples.md)
 
-!> *The following examples are not documented yet.*
-
 ## LSTM examples
 
 [LSTM examples](examples/lstm/lstm-examples.md)
 
 ## Autoencoders examples
 
-[Autoencoders examples](examples/ae/autoencoders-examples.md)
+[Autoencoders examples](examples/ae/autoencoder-examples.md)
