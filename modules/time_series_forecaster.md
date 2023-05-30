@@ -1,55 +1,81 @@
-# TimeSeriesForecaster
+# TimeSeriesForecaster class
 
-The `TimeSeriesForecaster` class is responsible for time series forecasting using TAGI.
+The `TimeSeriesForecaster` class is responsible for time series forecasting using the TAGI algorithm.
 
-## Constructor
+## Attributes
 
-### `__init__(self, num_epochs: int, data_loader: dict, net_prop: NetProp, param: Union[Param, None] = None, viz: Union[PredictionViz, None] = None, dtype=np.float32) -> None`
+- `num_epochs`: An integer representing the number of epochs for training.
+- `data_loader`: A dictionary containing the data loader.
+- `net_prop`: An instance of the `NetProp` class representing the network properties.
+- `network`: An instance of the `TagiNetwork` class.
+- `viz`: An optional instance of the `PredictionViz` class for visualization.
+- `dtype`: The data type (default: `np.float32`).
 
-Constructor method for the `TimeSeriesForecaster` class.
+## *constructor* method
 
-- Parameters:
-  - `num_epochs` (int): Number of epochs for training.
-  - `data_loader` (dict): Data loader dictionary containing training and testing data.
-  - `net_prop` (NetProp): Network properties.
-  - `param` (Union[Param, None], optional): Network parameters. Defaults to None.
-  - `viz` (Union[PredictionViz, None], optional): Visualization object. Defaults to None.
-  - `dtype` (np.float32, optional): Data type. Defaults to np.float32.
+```python
+def __init__(self, num_epochs: int, data_loader: dict, 
+             net_prop: NetProp, param: Union[Param, None] = None, 
+             viz: Union[PredictionViz, None] = None, dtype=np.float32) -> None:
+```
 
-- Returns: None
+**Parameters**
+- `num_epochs`: An integer representing the number of epochs for training.
+- `data_loader`: A dictionary containing the data loader.
+- `net_prop`: An instance of the `NetProp` class representing the network properties.
+- `param`: An optional instance of the `Param` class for setting network parameters (default: `None`).
+- `viz`: An optional instance of the `PredictionViz` class for visualization (default: `None`).
+- `dtype`: The data type (default: `np.float32`).
 
-## Methods
+## *train* method
 
-### `train(self) -> None`
+```python
+def train(self) -> None:
+    """Train LSTM network"""
+```
 
-- Description: Train LSTM network.
+Trains the LSTM network using the TAGI algorithm. It performs the following steps:
+1. Initializes inputs and outputs.
+2. Performs training iterations for each epoch.
+3. Updates the hidden states, network parameters, and loss.
+4. Displays the training progress.
 
-- Parameters: None
-- Returns: None
+## *predict* method
 
-### `predict(self) -> None`
+```python
+def predict(self) -> None:
+    """Make prediction for time series using TAGI"""
+```
 
-- Description: Make prediction for time series using TAGI.
+Makes predictions for time series using the TAGI algorithm. It performs the following steps:
+1. Initializes inputs.
+2. Makes predictions using the trained network.
+3. Unnormalizes the predictions.
+4. Computes the mean squared error, log-likelihood, and prints the results.
+5. If visualization is enabled, plots the predictions.
 
-- Parameters: None
-- Returns: None
+## *init_inputs* method
 
-### `init_inputs(self, batch_size: int) -> Tuple[np.ndarray, np.ndarray]`
+```python
+def init_inputs(self, batch_size: int) -> Tuple[np.ndarray, np.ndarray]:
+    """Initialize the covariance matrix for inputs"""
+```
 
-- Description: Initialize the covariance matrix for inputs.
+**Parameters**
+- `batch_size`: An integer representing the batch size.
 
-- Parameters:
-  - `batch_size` (int): Batch size.
+**Returns**
+- A tuple containing two numpy arrays: `Sx_batch` and `Sx_f_batch`.
 
-- Returns:
-  - `Tuple[np.ndarray, np.ndarray]`: Initialized inputs.
+## *init_outputs* method
 
-### `init_outputs(self, batch_size: int) -> Tuple[np.ndarray, np.ndarray]`
+```python
+def init_outputs(self, batch_size: int) -> Tuple[np.ndarray, np.ndarray]:
+    """Initialize the covariance matrix for outputs"""
+```
 
-- Description: Initialize the covariance matrix for outputs.
+**Parameters**
+- `batch_size`: An integer representing the batch size.
 
-- Parameters:
-  - `batch_size` (int): Batch size.
-
-- Returns:
-  - `Tuple[np.ndarray, np.ndarray]`: Initialized outputs.
+**Returns**
+- A tuple containing two numpy arrays: `V_batch` and `ud_idx_batch`.

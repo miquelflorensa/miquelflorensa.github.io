@@ -25,7 +25,6 @@ def __init__(self, net_prop: NetProp) -> None:
 ```
 
 **Parameters**
-
 - `net_prop`: An instance of the [NetProp class](api/netprop.md) representing the network properties.
 
 ## *net_prop* getter method
@@ -37,7 +36,6 @@ def net_prop(self) -> NetProp():
 ```
 
 **Returns**
-
 - `NetProp`: An instance of the [NetProp class](api/netprop.md).
 
 ## *net_prop* setter method
@@ -49,7 +47,6 @@ def net_prop(self, value: NetProp) -> None:
 ```
 
 **Parameters**
-
 - `value`: An instance of the [NetProp class](api/netprop.md) class representing the network properties.
 
 ## *feed_forward* method
@@ -63,7 +60,6 @@ def feed_forward(self, x_batch: np.ndarray,
 ```
 
 **Parameters**
-
 - `x_batch`: Input data as a NumPy array.
 - `Sx_batch`: Diagonal variance of input data as a NumPy array.
 - `Sx_f_batch`: Full variance of input data as a NumPy array.
@@ -80,7 +76,6 @@ def connected_feed_forward(self, ma: np.ndarray, va: np.ndarray,
 ```
 
 **Parameters**
-
 - `ma`: Mean of activation units as a NumPy array.
 - `va`: Variance of activation units as a NumPy array.
 - `mz`: Mean of hidden states as a NumPy array.
@@ -98,55 +93,48 @@ def state_feed_backward(self, y_batch: np.ndarray,
 ```
 
 **Parameters**
-
 - `y_batch`: Observations as a NumPy array.
 - `v_batch`: Variance of observations as a NumPy array.
 - `ud_idx_batch`: Updated indices for the last layer as a NumPy array.
 
 ## *param_feed_backward* method
 
-> Update parameters.
-
 ```python
-TagiNetwork.param_feed_backward()
+def param_feed_backward(self) -> None:
+    """Update parameters"""
 ```
 
 ## *get_network_outputs* method
 
-> Get output layer's hidden state distribution.
-
 ```python
-ma, va = TagiNetwork.get_network_outputs()
+def get_network_outputs(self) -> Tuple[np.ndarray, np.ndarray]:
+    """Get output layer's hidden state distribution"""
 ```
 
 **Returns**
-
 - `ma`: Mean of activation units as a NumPy array.
 - `va`: Variance of activation units as a NumPy array.
 
 ## *get_network_predictions* method
 
-> Get distribution of the predictions.
-
 ```python
-m_pred, v_pred = TagiNetwork.get_network_predictions()
+def get_network_predictions(self) -> Tuple[np.ndarray, np.ndarray]:
+    """Get distribution of the predictions"""
 ```
 
 **Returns**
-
 - `m_pred`: Mean of predictions as a NumPy array.
 - `v_pred`: Variance of predictions as a NumPy array.
 
 ## *get_all_network_outputs* method
 
-> Get all hidden states of the output layers.
-
 ```python
-ma, va, mz, vz, jcb = TagiNetwork.get_all_network_outputs()
+def get_all_network_outputs(self) -> 
+    Tuple[np.ndarray, np.ndarray, np.ndarray, np.ndarray, np.ndarray]:
+    """Get all hidden states of the output layers"""
 ```
 
 **Returns**
-
 - `ma`: Mean of activations for the output layer as a NumPy array.
 - `va`: Variance of activations for the output layer as a NumPy array.
 - `mz`: Mean of hidden states for the output layer as a NumPy array.
@@ -155,14 +143,13 @@ ma, va, mz, vz, jcb = TagiNetwork.get_all_network_outputs()
 
 ## *get_all_network_inputs* method
 
-> Get all hidden states of the input layers.
-
 ```python
-ma, va, mz, vz, jcb = TagiNetwork.get_all_network_inputs()
+def get_all_network_inputs(self) -> 
+    Tuple[np.ndarray, np.ndarray, np.ndarray, np.ndarray, np.ndarray]:
+    """Get all hidden states of the output layers"""
 ```
 
 **Returns**
-
 - `ma`: Mean of activations for the input layer as a NumPy array.
 - `va`: Variance of activations for the input layer as a NumPy array.
 - `mz`: Mean of hidden states for the input layer as a NumPy array.
@@ -171,71 +158,59 @@ ma, va, mz, vz, jcb = TagiNetwork.get_all_network_inputs()
 
 ## *get_derivatives* method
 
-> Compute derivatives of the output layer w.r.t a given layer using TAGI.
-
 ```python
-mdy, vdy = TagiNetwork.get_derivatives(layer: int)
+def get_derivatives(self, layer: int = 0) -> Tuple[np.ndarray, np.ndarray]:
+    """ Compute derivatives of the output layer w.r.t a given layer using TAGI"""
 ```
 
 **Parameters**
-
 - `layer`: Layer index of the network.
 
 **Returns**
-
 - `mdy`: Mean values of derivatives as a NumPy array.
 - `vdy`: Variance values of derivatives as a NumPy array.
 
 ## *get_inovation_mean_var* method
 
-> Get updating quantities for the innovation.
-
 ```python
-delta_m, delta_v = TagiNetwork.get_inovation_mean_var(layer: int)
+def get_inovation_mean_var(self, layer: int) -> Tuple[np.ndarray, np.ndarray]:
+    """Get updating quantities for the inovation"""
 ```
 
 **Parameters**
-
 - `layer`: Layer index of the network.
 
 **Returns**
-
 - `delta_m`: Innovation mean as a NumPy array.
 - `delta_v`: Innovation variance as a NumPy array.
 
 ## *get_state_delta_mean_var(self)* method
 
-> Get updating quantities for the first layer.
-
 ```python
-delta_mz, delta_vz = TagiNetwork.get_state_delta_mean_var()
+def get_state_delta_mean_var(self) -> None:
+    """Get updating quatities for the first layer"""
 ```
 
 **Returns**
-
 - `delta_mz`: Updating quantities for the hidden-state mean of the first layer as a NumPy array.
 - `delta_vz`: Updating quantities for the hidden-state variance of the first layer as a NumPy array.
 
 ## *set_parameters* method
 
-> Set parameter values to the network.
-
 ```python
-TagiNetwork.set_parameters(param: Param)
+def set_parameters(self, param: Param) -> None:
+    """Set parameter values to network"""
 ```
 
 **Parameters**
-
 - `param`: An instance of the [Param class](api/param.md) representing the parameter values.
 
 ## *get_parameters* method
 
-> Get parameters of the network.
-
 ```python
-param = TagiNetwork.get_parameters()
+def get_parameters(self) -> tagi.Param:
+    """Get parameters of network"""
 ```
 
 **Returns**
-
 - `param`: An instance of the [Param class](api/param.md) representing the network parameters.

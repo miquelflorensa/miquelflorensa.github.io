@@ -60,6 +60,16 @@ Prism.languages.python = {
 		pattern: /(:)[^:(){}]+(?=}$|\)|,)/,
 		lookbehind: true
 	},
+	'type-annotation-tuple': {
+		pattern: /\bTuple\[[^\[\]]*\]/,
+		lookbehind: true,
+		inside: {
+			'tuple-elements': {
+			  pattern: /\b\w+\b(?=\s*(?:,|$))/g,
+			  lookbehind: true,
+			},
+		}
+	},
 	'punctuation': /[{}[\];(),.:]/
 };
 

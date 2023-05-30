@@ -149,4 +149,9 @@ li.navbar a img {
 .token.after-two-points {
     color: rgb(108, 154, 180);
   }
+
+
+.token.type-annotation-tuple {
+    color: rgb(108, 154, 180);
+}
   
