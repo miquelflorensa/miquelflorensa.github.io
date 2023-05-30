@@ -30,6 +30,30 @@ pre code {
     margin: 0 !important;
 }
 
+li code {
+    padding: 0.05em !important;
+    margin: 0 !important;
+}
+
+pre.language- {
+    margin-top: 0.2em !important;
+    margin-bottom: 0.5em !important;
+}
+
+pre.language- code {
+    padding: 0.7em !important;
+    margin: 0 !important;
+}
+
+pre.language-sh {
+    margin-top: 0.2em !important;
+    margin-bottom: 0.5em !important;
+}
+
+pre.language-sh code {
+    padding: 0.7em !important;
+    margin: 0 !important;
+}
 
 ul.navbar {
     list-style-type: none;

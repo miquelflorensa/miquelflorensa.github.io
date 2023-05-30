@@ -1,2 +1,2 @@
 - [Autoencoder MNIST](examples/ae/autoencoder-mnist.md)
-- [Autoencoder CIFAR](examples/ae/autoencoder-cifar.md)
+- [Autoencoder CIFAR10](examples/ae/autoencoder-cifar10.md)

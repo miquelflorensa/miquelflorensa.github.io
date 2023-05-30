@@ -1,7 +1,7 @@
 # API
 
-!> *None of these API's are documented yet. This is a work in progress.*
-
   - [Metrics](api/metrics.md)
+  - [NetProp](api/netprop.md)
+  - [Param](api/param.md)
   - [TAGI Network](api/network.md)
   - [TAGI Utils](api/utils.md)

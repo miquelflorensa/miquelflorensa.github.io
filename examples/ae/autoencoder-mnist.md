@@ -17,7 +17,7 @@
 
 ## 1. Setup
 
-We first import the required modules: the numpy library, the ImageViz class, the autoencoder, the data loader and the encoder/decoder.
+We first import the required modules: the numpy library, the ImageViz, the autoencoder, the data loader and the encoder/decoder classes.
 
 ```python
 import numpy as np
@@ -36,29 +36,27 @@ We define the number of epochs, some model properties and the paths to the data.
 
 ```python
 # User-input
-num_epochs = 10
-mu = np.array([0.1309])
-sigma = np.array([1])
-img_size = np.array([1, 28, 28])
+num_epochs = 10                  # row for 10 epochs
+mu = np.array([0.1309])          # mean of each input
+sigma = np.array([1])            # standard deviation of each input
+img_size = np.array([1, 28, 28]) # size of image input
 x_train_file = "./data/mnist/train-images-idx3-ubyte"
 y_train_file = "./data/mnist/train-labels-idx1-ubyte"
-x_test_file = "./data/mnist/t10k-images-idx3-ubyte"
-y_test_file = "./data/mnist/t10k-labels-idx1-ubyte"
+x_test_file =  "./data/mnist/t10k-images-idx3-ubyte"
+y_test_file =  "./data/mnist/t10k-labels-idx1-ubyte"
 ```
 
 **You can find the used data in the [MNIST data](https://github.com/lhnguyen102/cuTAGI/tree/main/data/mnist) in the repository.*
 
 ## 3. Create the model
 
-In this example we will create a model consisting in an encoder and a decoder. Find out more about the architecture in [Analytically Tractable Inference in Deep Neural Networks](https://arxiv.org/pdf/2103.05461.pdf).
+In this example we will create a model consisting in an encoder and a decoder that will allow us to reconstruct the original images. Find out more about the architecture in [Analytically Tractable Inference in Deep Neural Networks](https://arxiv.org/pdf/2103.05461.pdf).
 
 ```python
 # Model
 encoder_prop = MnistEncoder()
 decoder_prop = MnistDecoder()
 ```
-
-![3 conv for cifar10](../../images/architectures/arch-3-cov-cifar.png)
 
 ## 4. Load the data
 
@@ -101,7 +99,7 @@ ae_task = Autoencoder(num_epochs=num_epochs,
                         viz=viz)
 ```
 
-> Find out more about the [Autoencoder class](modules/autoencodermd).
+> Find out more about the [Autoencoder class](modules/autoencoder.md).
 
 ## 7 Train and evaluate the model
 
@@ -109,7 +107,7 @@ Finally, we can train and evaluate the model. We will call the train and predict
 
 ```python
 ae_task.train()
-ae_task.predict() d
+ae_task.predict()
 ```
 
 ## 8. Results
