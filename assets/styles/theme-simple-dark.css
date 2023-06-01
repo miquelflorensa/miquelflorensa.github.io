@@ -138,9 +138,10 @@ li.navbar a img {
  #docsify-darklight-theme {
 	border: none;
 	background-color: transparent;
-	position: absolute;
-	right: -13px;
-    top: 75px;
+	position: flex;
+    float: right;
+    margin-top: 8px;
+    margin-left: 8px;
 	width: 25px;
 	height: 25px;
 	background-repeat: no-repeat;

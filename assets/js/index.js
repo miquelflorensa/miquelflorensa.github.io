@@ -9,13 +9,13 @@ const plugin = (hook, vm) => {
         accent: '#42b983',
         toogleBackground : '#ffffff',
         background: '#091a28',
-        toogleImage : 'url(https://cdn.jsdelivr.net/npm/docsify-darklight-theme@latest/icons/sun.svg)'
+        toogleImage : 'url(../../images/icons/sun.svg)'
       },
       light: {
         accent: '#42b983',
         toogleBackground : '#091a28',
         background: '#ffffff',
-        toogleImage : 'url(https://cdn.jsdelivr.net/npm/docsify-darklight-theme@latest/icons/moon.svg)'
+        toogleImage : 'url(../../images/icons/moon.svg)'
       }
     }
   
@@ -82,11 +82,6 @@ const plugin = (hook, vm) => {
 
     }
     
-    hook.afterEach(function(html, next) {
-      var darkEl = `<button id="docsify-darklight-theme" aria-label="Dark mode"></button>`
-      html = `${darkEl}${html}`
-      next(html)
-    })
     
     hook.doneEach(function() {
       let savedTheme = localStorage.getItem('DARK_LIGHT_THEME')
