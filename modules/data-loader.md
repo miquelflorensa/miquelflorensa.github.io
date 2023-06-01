@@ -8,96 +8,285 @@ Contact:      miquelflorensa11@gmail.com & luongha.nguyen@gmail.com & james.goul
 Copyright (c) 2023 Miquel Florensa & Luong-Ha Nguyen & James-A. Goulet. Some rights reserved.
 -------------------------------------------------------------------->
 
-# Data loader
+# data_loader.py
 
-This file contains classes and functions for preparing data for neural networks.
+<a href="https://github.com/lhnguyen102/cuTAGI/blob/main/python_examples/data_loader.py" class="github-link">
+  <div class="github-icon-container">
+    <img src="../images/GitHub-Mark.png" alt="GitHub" height="32" width="64">
+  </div>
+  <div class="github-text-container">
+    Github Source code
+  </div>
+</a>
 
-## DataloaderBase (abstract class)
+# The DataloaderBase class
+
+This class represents a template for a data loader.
+
+## Atributes
+
+- `normalizer`: An instance from the [Normalizer](api/utils?id=the-normalizer-class) class.
+
+## *constructor* method
+
+> Constructor for the DataloaderBase class.
+
 ```python
-class DataloaderBase(ABC):
-    """Dataloader template"""
+def __init__(self, batch_size: int) -> None:
 ```
 
-> This is an abstract base class that serves as a template for other dataloader classes.
-> 
-> It provides common methods and functionality for data loading and processing.
->
-> Subclasses are expected to implement the `process_data` method according to their specific data requirements.
+**Parameters**
+- `batch_size`: An integer representing the batch size.
 
-### Methods
-- `__init__(self, batch_size: int) -> None`: Initializes the DataloaderBase object with the specified batch size.
-- `process_data(self) -> dict`: Abstract method to be implemented by subclasses for processing data.
-- `create_data_loader(self, raw_input: np.ndarray, raw_output: np.ndarray) -> list`: Creates a data loader based on the batch size.
-- `split_data(data: int, test_ratio: float = 0.2, val_ratio: float = 0.0) -> dict`: Splits the data into training, validation, and test sets.
-- `load_data_from_csv(data_file: str) -> pd.DataFrame`: Loads data from a CSV file.
-- `split_evenly(num_data, chunk_size: int)`: Splits the data evenly.
-- `split_reminder(num_data: int, chunk_size: int)`: Pads the remaining data.
+## *process_data* method
 
-## RegressionDataLoader (subclass of DataloaderBase)
 ```python
-class RegressionDataLoader(DataloaderBase):
-    """Load and format data that are fed to the neural network.
-     The user must provide the input and output data file in CSV format"""
+@abstractmethod
+def process_data(self) -> dict:
+    """Abstract method for processing the data"""
 ```
 
-> This class is responsible for loading and formatting data for regression tasks.
->
-> It takes input and output data files in CSV format and processes them for training and testing.
+**Returns**
+- `dict`: A dictionary containing the processed data.
 
-### Methods
-- `__init__(self, batch_size: int, num_inputs: int, num_outputs: int) -> None`: Initializes the RegressionDataLoader object with the specified batch size, number of inputs, and number of outputs.
-- `process_data(self, x_train_file: str, y_train_file: str, x_test_file: str, y_test_file: str) -> dict`: Processes data from CSV files for regression tasks.
+## *create_data_loader* method
 
-## MnistDataloader (subclass of DataloaderBase)
 ```python
-class MnistDataloader(DataloaderBase):
-    """Data loader for MNIST dataset"""
+def create_data_loader(self, raw_input: np.ndarray, raw_output: np.ndarray) -> list:
+    """Create dataloader based on batch size"""
 ```
-> This class is a data loader specifically designed for the MNIST dataset, which consists of handwritten digit images.
->
-> It loads and preprocesses the MNIST image data for training and testing.
 
-### Methods
-- `process_data(self, x_train_file: str, y_train_file: str, x_test_file: str, y_test_file: str) -> dict`: Processes MNIST images data.
+**Parameters**
+- `raw_input`: Raw input data as a NumPy array.
+- `raw_output`: Raw output data as a NumPy array.
 
-## MnistOneHotDataloader (subclass of DataloaderBase)
+**Returns**
+- `list`: A list of tuples representing the input-output pairs in each batch.
+
+## *split_data* method
+
 ```python
-class MnistOneHotDataloader(DataloaderBase):
-    """Data loader for MNIST dataset"""
+@staticmethod
+def split_data(data: int, test_ratio: float = 0.2, val_ratio: float = 0.0) -> dict:
+    """Split data into training, validation, and test sets"""
 ```
-> This class is similar to the `MnistDataloader` but additionally performs one-hot encoding on the labels.
->
-> It converts the categorical label values into binary vectors to be used in classification tasks.
 
-### Methods
-- `process_data(self, x_train_file: str, y_train_file: str, x_test_file: str, y_test_file: str) -> dict`: Processes MNIST images data and uses one-hot encoding for labels.
+**Parameters**
+- `data`: Input data as a NumPy array.
+- `test_ratio`: Optional. Float representing the ratio of test data (default: 0.2).
+- `val_ratio`: Optional. Float representing the ratio of validation data (default: 0.0).
 
-## TimeSeriesDataloader (subclass of DataloaderBase)
+**Returns**
+- `dict`: A dictionary containing the split data sets.
+
+## *load_data_from_csv* method
+
 ```python
-class TimeSeriesDataloader(DataloaderBase):
-    """Data loader for time series"""
+@staticmethod
+def load_data_from_csv(data_file: str) -> pd.DataFrame:
+    """Load data from a CSV file"""
 ```
-> This class is designed for loading and processing time series data.
->
-> It takes input data files containing time series sequences and associated timestamps.
->
-> The class organizes the data into input-output pairs based on specified sequence lengths and stride values.
 
-### Methods
-- `__init__(self, batch_size: int, output_col: np.ndarray, input_seq_len: int, output_seq_len: int, num_features: int, stride: int) -> None`: Initializes the TimeSeriesDataloader object with the specified parameters.
-- `process_data(self, x_train_file: str, datetime_train_file: str, x_test_file: str, datetime_test_file: str) -> dict`: Processes time series data.
+**Parameters**
+- `data_file`: Path to the CSV file.
 
-## ClassificationDataloader (subclass of DataloaderBase)
+**Returns**
+- `pd.DataFrame`: The loaded data as a Pandas DataFrame.
+
+## *split_evenly* method
+
 ```python
-class ClassificationDataloader(DataloaderBase):
-    """Data loader for CSV dataset for classification"""
+@staticmethod
+def split_evenly(num_data, chunk_size: int):
+    """Split data evenly"""
 ```
-> This class is responsible for loading and formatting data for classification tasks.
->
-> It takes input and output data files in CSV format and processes them for training and testing.
 
-### Methods
-- `__init__(self, batch_size: int) -> None`: Initializes the ClassificationDataloader object with the specified batch size.
-- `process_data(self, x_train_file: str, y_train_file: str, x_test_file: str, y_test_file: str) -> dict`: Processes data from CSV files for classification tasks.
+**Parameters**
+- `num_data`: The number of data points.
+- `chunk_size`: The size of each chunk.
 
+**Returns**
+- `np.ndarray`: An array of indices representing the split data.
 
+## *split_reminder* method
+
+```python
+@staticmethod
+def split_reminder(num_data: int, chunk_size: int):
+    """Pad the reminder"""
+```
+
+**Parameters**
+- `num_data`: The number of data points.
+- `chunk_size`: The size of each chunk.
+
+**Returns**
+- `np.ndarray`: An array of indices representing the split data.
+
+---
+
+<!--########################################################################-->
+<!--########################################################################-->
+<!--########################################################################-->
+<!--########################################################################-->
+<!--########################################################################-->
+<!--########################################################################-->
+<!--########################################################################-->
+<!--########################################################################-->
+<!--########################################################################-->
+
+# The RegressionDataLoader class
+
+A class for loading and formatting data that is fed to a neural network. This class inherits from the DataloaderBase class.
+
+## *constructor* method
+
+> Constructor for the RegressionDataLoader class.
+
+```python
+def __init__(self, batch_size: int, num_inputs: int, num_outputs: int) -> None:
+```
+
+**Parameters**
+- `batch_size`: An integer representing the batch size.
+- `num_inputs`: An integer representing the number of input features.
+- `num_outputs`: An integer representing the number of output features.
+
+## *process_data* method
+
+```python
+def process_data(self, x_train_file: str, y_train_file: str, 
+                 x_test_file: str, y_test_file: str) -> dict:
+    """Process data from the csv file"""
+```
+
+**Parameters**
+- `x_train_file`: A string representing the file path of the input training data in CSV format.
+- `y_train_file`: A string representing the file path of the output training data in CSV format.
+- `x_test_file`: A string representing the file path of the input testing data in CSV format.
+- `y_test_file`: A string representing the file path of the output testing data in CSV format.
+
+**Returns**
+- `dict`: A dictionary containing the processed data and normalization parameters.
+
+<!--########################################################################-->
+<!--########################################################################-->
+<!--########################################################################-->
+<!--########################################################################-->
+<!--########################################################################-->
+<!--########################################################################-->
+<!--########################################################################-->
+<!--########################################################################-->
+<!--########################################################################-->
+
+# MnistDataloader class
+
+Data loader for mnist dataset.
+
+## *process_data* method
+
+```python
+def process_data(self, x_train_file: str, y_train_file: str,
+                 x_test_file: str, y_test_file: str) -> dict:
+    """Process mnist images"""
+```
+
+**Parameters**
+- `x_train_file`: Path to the file containing mnist training images.
+- `y_train_file`: Path to the file containing mnist training labels.
+- `x_test_file`: Path to the file containing mnist test images.
+- `y_test_file`: Path to the file containing mnist test labels.
+
+**Returns**
+- `dict`: A dictionary containing the processed data.
+
+<!--########################################################################-->
+<!--########################################################################-->
+<!--########################################################################-->
+<!--########################################################################-->
+<!--########################################################################-->
+<!--########################################################################-->
+<!--########################################################################-->
+<!--########################################################################-->
+<!--########################################################################-->
+
+# The TimeSeriesDataloader class
+
+Data loader for time series.
+
+## *constructor* method
+
+> Constructor for the TimeSeriesDataloader class.
+
+```python
+def __init__(self, batch_size: int, output_col: np.ndarray,
+             input_seq_len: int, output_seq_len: int, num_features: int,
+             stride: int) -> None:
+```
+
+**Parameters**
+- `batch_size`: An integer representing the batch size.
+- `output_col`: A NumPy array representing the output column.
+- `input_seq_len`: An integer representing the length of the input sequence.
+- `output_seq_len`: An integer representing the length of the output sequence.
+- `num_features`: An integer representing the number of features.
+- `stride`: An integer representing the stride.
+
+## *process_data* method
+
+```python
+def process_data(self, x_train_file: str, datetime_train_file: str,
+                 x_test_file: str, datetime_test_file: str) -> dict:
+    """Process time series"""
+```
+
+**Parameters**
+- `x_train_file`: A string representing the file path for training input data.
+- `datetime_train_file`: A string representing the file path for training datetime data.
+- `x_test_file`: A string representing the file path for testing input data.
+- `datetime_test_file`: A string representing the file path for testing datetime data.
+
+**Returns**
+- `dict`: A dictionary containing the processed data.
+
+<!--########################################################################-->
+<!--########################################################################-->
+<!--########################################################################-->
+<!--########################################################################-->
+<!--########################################################################-->
+<!--########################################################################-->
+<!--########################################################################-->
+<!--########################################################################-->
+<!--########################################################################-->
+
+# ClassificationDataloader class
+
+Data loader for csv dataset for classification.
+
+## *constructor* method
+
+> Constructor for the ClassificationDataloader class.
+
+```python
+def __init__(self, batch_size: int) -> None:
+```
+
+**Parameters**
+- `batch_size`: An integer representing the batch size for the data loader.
+
+## *process_data* method
+
+```python
+def process_data(self, x_train_file: str, y_train_file: str,
+                 x_test_file: str, y_test_file: str) -> dict:
+    """Process data from the csv file"""
+```
+
+**Parameters**
+- `x_train_file`: File path for the training images CSV file.
+- `y_train_file`: File path for the training labels CSV file.
+- `x_test_file`: File path for the test images CSV file.
+- `y_test_file`: File path for the test labels CSV file.
+
+**Returns**
+- `dict`: A dictionary containing the processed data.

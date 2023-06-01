@@ -151,7 +151,7 @@ class DervMLP(NetProp):
 
 ```python
 class MnistMLP(NetProp):
-    """Multi-layer perceptron for mnist classificaiton.
+    """Multi-layer perceptron for mnist classification.
 
     NOTE: The number of hidden states for last layer is 11 because
     TAGI use the hierarchical softmax for the classification task. 

@@ -11,6 +11,11 @@ h2 {
     margin-bottom: 0.5em !important;
 }
 
+h2 em {
+    color:hsl(341, 42%, 64%);
+}
+
+
 pre {
     margin-bottom: 0em !important;
 }
@@ -116,4 +121,34 @@ li.navbar a img {
     color: #0087ca;
     text-decoration: none;
     font-weight: bold;
+}
+
+.token.after-two-points {
+    color: rgb(108, 154, 180);
+  }
+
+
+.token.type-annotation-tuple {
+    color: rgb(108, 154, 180);
+}
+  
+
+ /* toogler */
+
+ #docsify-darklight-theme {
+	border: none;
+	background-color: transparent;
+	position: absolute;
+	right: -13px;
+    top: 75px;
+	width: 25px;
+	height: 25px;
+	background-repeat: no-repeat;
+	background-image: var(--toogleImage);
+	-o-background-size: cover;
+    -moz-background-size: cover;
+    -webkit-background-size:cover;
+    background-size: cover;
+	cursor: pointer;
+	transition: background-image .15s ease-in-out .15s
 }

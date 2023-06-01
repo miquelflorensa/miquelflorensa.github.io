@@ -2,6 +2,15 @@
 
 The `TimeSeriesForecaster` class is responsible for time series forecasting using the TAGI algorithm.
 
+<a href="https://github.com/lhnguyen102/cuTAGI/blob/main/python_examples/time_series_forecaster.py" class="github-link">
+  <div class="github-icon-container">
+    <img src="../images/GitHub-Mark.png" alt="GitHub" height="32" width="64">
+  </div>
+  <div class="github-text-container">
+    Github Source code
+  </div>
+</a>
+
 ## Attributes
 
 - `num_epochs`: An integer representing the number of epochs for training.
