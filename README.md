@@ -10,7 +10,7 @@ Copyright (c) 2023 Miquel Florensa & Luong-Ha Nguyen & James-A. Goulet. Some rig
 
 # py/cuTAGI Documentation
 
-> cuTAGI is an open-source Bayesian neural networks library that is based on Tractable Approximate Gaussian Inference (TAGI) theory. It supports various neural network architectures such as full-connected, convolutional, and transpose convolutional layers, as well as skip connections, pooling and normalization layers. cuTAGI is capable of performing different tasks such as supervised, unsupervised, and reinforcement learning. This library has a python API called pyTAGI that allows users to easily use the C++ and CUDA librararies.
+> cuTAGI is an open-source Bayesian neural networks library that is based on Tractable Approximate Gaussian Inference (TAGI) theory. It supports various neural network architectures such as full-connected, convolutional, and transpose convolutional layers, as well as skip connections, pooling and normalization layers. cuTAGI is capable of performing different tasks such as supervised, unsupervised, and reinforcement learning. This library has a python API called pyTAGI that allows users to easily use the C++ and CUDA libraries.
 
 
 ## Getting Started
