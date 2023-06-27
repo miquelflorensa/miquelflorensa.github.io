@@ -46,26 +46,24 @@ y_test_file = "./data/cifar/y_test.csv"
 
 In this example we are going to use a [Resnet18 architecture](https://arxiv.org/abs/1512.03385).
 
-!> This is NOT the full Resnet18 architecture. This is just a test.
-
 ```python
 class ResnetCifarMLP(NetProp):
     """Multi-layer perceptron for cifar classificaiton."""
 
     def __init__(self) -> None:
         super().__init__()
-        #------------------- #Input-----------------#Stage1-------------------------#Stage2-------------------------#Stage3-------------------------#Stage4-------------------------#Output---
-        self.layers =       [2,     2,      4,      2,      4,      2,      4,      2,      4,      2,      4,      1,      1]
-        self.nodes =        [3072,  0,      0,      0,      0,      0,      0,      0,      0,      0,      0,    256,     11]
-        self.kernels =      [7,     1,      3,      1,      3,      1,      3,      1,      3,      1,      3,      1,      1]
-        self.strides =      [1,     0,      1,      0,      1,      0,      1,      0,      1,      0,      1,      0,      0]
-        self.widths =       [128, 128,     64,     64,     32,     32,     16,     16,      8,      8,      4,      1,      1]
-        self.heights =      [128, 128,     64,     64,     32,     32,     16,     16,      8,      8,      4,      1,      1]
-        self.filters =      [3,    32,     32,     32,     32,     64,     64,    128,    128,    256,    256,      1,      1]
-        self.pads =         [0,     1,      0,      1,      0,      1,      0,      1,      0,      1,      0,      1,      0]
-        self.pad_types =    [0,     1,      0,      1,      0,      1,      0,      1,      0,      1,      0,      1,      0]
-        self.activations =  [0,     4,      0,      4,      0,      4,      0,      4,      0,      4,      0,      4,     12]
-        self.shortcuts =    [-1,    3,     -1,      6,     -1,     -1,     -1,      7,     -1,     -1,     -1,     -1,     -1]
+        #-------------------#Input-----------------#Stage1-------------------------#Stage2-------------------------#Stage3-------------------------#Stage4-------------------------#Output---
+        self.layers =       [2,     2,      4,      2,      4,      2,      4,      2,      4,      2,      4,      2,      4,      2,      4,      2,      4,      2,      4,      1,     1]
+        self.nodes =        [3072,  0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,    256,    11]
+        self.kernels =      [7,     1,      3,      1,      3,      1,      3,      1,      3,      1,      3,      1,      3,      1,      3,      1,      3,      1,      3,      1,     1]
+        self.strides =      [1,     0,      1,      0,      1,      0,      1,      0,      1,      0,      1,      0,      1,      0,      1,      0,      1,      0,      1,      0,     0]
+        self.widths =       [256, 256,    128,    128,     64,     64,     32,     32,     32,     32,     16,     16,      8,      8,      8,      4,      4,      4,      4,      1,     1]
+        self.heights =      [256, 256,    128,    128,     64,     64,     32,     32,     32,     32,     16,     16,      8,      8,      8,      4,      4,      4,      4,      1,     1]
+        self.filters =      [3,    64,     64,     64,     64,     64,     64,    128,    128,    128,    256,    256,    256,    256,    256,    512,    512,    512,     512,   512,     1]
+        self.pads =         [1,     0,      1,      0,      1,      0,      1,      0,      1,      0,      1,      0,      1,      0,      1,      0,      1,      0,      1,      0,     0]
+        self.pad_types =    [1,     0,      1,      0,      1,      0,      1,      0,      1,      0,      1,      0,      1,      0,      1,      0,      1,      0,      1,      0,     0]
+        self.activations =  [0,     4,      0,      4,      0,      4,      0,      4,      0,      4,      0,      4,      0,      4,      0,      4,      0,      4,      0,      4,    12]
+        self.shortcuts =    [-1,    3,     -1,      6,     -1,      8,     -1,     10,     -1,     12,     -1,     14,     -1,     16,     -1,     18,     -1,     20,     -1,     -1,    -1]
         self.batch_size = 16
         self.sigma_v = 1
         self.sigma_v_min = 0.2
@@ -124,7 +122,7 @@ In this section we will see the performace of the model using cuTAGI and we will
 |  Model   | Error Rate [%] |       | Hyperparameters |       |
 | :------: | :------------: | :---: | :-------------: | :---: |
 |          |     e = 1      | e = E |        E        |   B   |
-| **TAGI** |      65.9      | 13.8  |       50        |  16   |
+| **TAGI** |      72.4      | 21.5  |       50        |  16   |
 |    BP    |       -        | 14.0  |       160       |  128  |
 
 ?> The table above compares the classification accuracy with the results from [Osawa et al.](https://www.researchgate.net/publication/333650027_Practical_Deep_Learning_with_Bayesian_Principles) where they use a Resnet18 trained with backpropagation.

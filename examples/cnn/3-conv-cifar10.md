@@ -76,8 +76,6 @@ class ConvCifarMLP(NetProp):
 net_prop = ConvCifarMLP()
 ```
 
-![3 conv for cifar10](../../images/architectures/arch-3-cov-cifar.png)
-
 ## 4. Load the data
 
 The next step is to load the data. We will use the [ClassificationDataloader class](modules/data-loader?id=data-loader) to load the data and we will pass the batch size and the data paths to the class.
