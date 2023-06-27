@@ -161,4 +161,4 @@ ae_task.predict()
 
 If we created the visualizer object, we can visualize the results. The following figure shows the reconstructed images.
 
-![autoencoder mnist](../../images/cifar_autoencoder.png)
+![autoencoder mnist](../../images/cifar_autoencoder_disp.png)
