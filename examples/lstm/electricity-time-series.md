@@ -2,9 +2,9 @@
 
 **Author:** [Miquel Florensa](https://www.linkedin.com/in/miquel-florensa/)  
 **Date:** 2023/05/25  
-**Description:** This example shows how to use the time series forecaster to solve a LSTM toy problem.  
+**Description:** This example shows how to use the time series forecaster to solve a forecasting LSTM problem to predict electricity consumptions.  
 
-<a href="https://github.com/miquelflorensa/cuTAGI/blob/main/python_examples/electricity_time_series_runner.py" class="github-link">
+<a href="https://github.com/miquelflorensa/miquelflorensa.github.io/blob/main/code/electricity_time_series_runner.py" class="github-link">
   <div class="github-icon-container">
     <img src="../../images/GitHub-Mark.png" alt="GitHub" height="32" width="64">
   </div>
