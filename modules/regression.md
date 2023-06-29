@@ -1,6 +1,6 @@
 # Regression class
 
-The `Regression` class is responsible for performing image classification using the TAGI algorithm.
+The `Regression` class is responsible for performing regression using the TAGI algorithm.
 
 <a href="https://github.com/lhnguyen102/cuTAGI/blob/main/python_examples/regression.py" class="github-link">
   <div class="github-icon-container">
