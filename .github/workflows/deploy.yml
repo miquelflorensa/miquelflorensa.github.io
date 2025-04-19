@@ -1,4 +1,3 @@
-# .github/workflows/deploy.yml
 name: 🚀 Deploy Astro to GitHub Pages
 
 on:
@@ -7,15 +6,14 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: read           # for checkout
-  pages: write             # to publish Pages
-  id-token: write          # for OIDC token
+  contents: read      # checkout
+  pages: write        # deploy
+  id-token: write     # for OIDC
 
 jobs:
   build_and_deploy:
     runs-on: ubuntu-latest
-    environment:
-      name: github-pages
+    environment: github-pages
 
     steps:
       - name: Checkout repository
@@ -23,14 +21,13 @@ jobs:
 
       - name: Install, build, and package Astro site
         uses: withastro/action@v4
-        with:
-          # (optional) directory of your Astro project, if not repo root
-          # path: .
+        # by default this:
+        #  • runs `npm ci` (or yarn)
+        #  • runs `npm run build`
+        #  • uploads ./dist as the Pages artifact
 
       - name: Disable Jekyll
         run: echo > ./dist/.nojekyll
 
       - name: Deploy to GitHub Pages
         uses: actions/deploy-pages@v1
-        with:
-          # nothing needed here—deploys the artifact from the previous step
