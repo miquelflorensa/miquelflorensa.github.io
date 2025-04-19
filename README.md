@@ -1,64 +1,125 @@
-![Astro Nano](_astro_nano.png)
+```markdown
+# miquelflorensa.github.io
 
-Astro Nano is a static, minimalist, lightweight, lightning fast portfolio and blog theme.
+> 👋 Hi, I’m Miquel Florensa—Ph.D. student in Computer Engineering at Polytechnique Montréal  
+> This is my personal website built with [Astro 3.0](https://astro.build) and deployed via GitHub Pages at:  
+> `https://miquelflorensa.github.io/`
 
-Built with Astro, Tailwind and Typescript, an no frameworks.
+---
 
-It was designed as an even more minimal theme than my popular theme [Astro Sphere](https://github.com/markhorn-dev/astro-sphere)
+## 🚀 About Me
 
-## 🚀 Deploy your own
+I’m currently pursuing my Ph.D. at Polytechnique Montréal, working with the BayesWorks and LITIV research groups.  
+My research combines **Diffusion Models** with **Bayesian Neural Networks** to push the boundaries of uncertainty quantification and generative modeling.  
 
-[![Deploy with Vercel](_deploy_vercel.svg)](https://vercel.com/new/clone?repository-url=https://github.com/markhorn-dev/astro-nano)  [![Deploy with Netlify](_deploy_netlify.svg)](https://app.netlify.com/start/deploy?repository=https://github.com/markhorn-dev/astro-nano)
+- 🔬 **Research interests:**  
+  - Probabilistic deep learning & uncertainty  
+  - Generative models (diffusion, autoregressive)  
+  - CUDA kernel development for high‑performance inference  
+- 💡 **Passion projects:**  
+  - Generative AI demos  
+  - Computer vision pipelines  
+  - Robotics & autonomous systems  
+- 📚 **When I’m offline:**  
+  - Sci‑fi reading & world‑building  
+  - Open‑source contributions  
 
-## 📋 Features
+---
 
-- ✅ 100/100 Lighthouse performance
-- ✅ Responsive
-- ✅ Accessible
-- ✅ SEO-friendly
-- ✅ Typesafe
-- ✅ Minimal style
-- ✅ Light/Dark Theme
-- ✅ Animated UI
-- ✅ Tailwind styling
-- ✅ Auto generated sitemap
-- ✅ Auto generated RSS Feed
-- ✅ Markdown support
-- ✅ MDX Support (components in your markdown)
+## 🏗️ Tech Stack
 
-## 💯 Lighthouse score
-![Astro Nano Lighthouse Score](_lighthouse.png)
+- **Framework:** Astro 3.0  
+- **Languages:** TypeScript / JavaScript / Astro  
+- **Styling:** Tailwind CSS  
+- **Content:** `astro:content` collections for blog, projects, and CV  
+- **Components & Layouts:**  
+  - `Container.astro`, `PageLayout.astro`  
+  - Custom cards (`ArrowCard.astro`), links, and utility components  
+- **Utilities:**  
+  - `@lib/utils` for date formatting, constants  
+  - Environment constants in `@consts` (site URL, social links, etc.)  
+- **Deployment:** GitHub Pages via Actions
 
-## 🕊️ Lightweight
-No frameworks or added bulk
+---
 
-## ⚡︎ Fast
-Rendered in ~40ms on localhost
+## 📥 Getting Started
 
-## 📄 Configuration
+1. **Clone this repo**  
+   ```bash
+   git clone https://github.com/miquelflorensa/miquelflorensa.github.io.git
+   cd miquelflorensa.github.io
+   ```
 
-The blog posts on the demo serve as the documentation and configuration.
+2. **Install dependencies**  
+   ```bash
+   npm install
+   # or
+   yarn install
+   ```
 
-## 💻 Commands
+3. **Configure your environment**  
+   - All settings (site URL, number of posts/projects to show, socials, etc.) live in `src/consts.ts`.  
+   - Update any personal links or email in that file.
 
-All commands are run from the root of the project, from a terminal:
+4. **Run development server**  
+   ```bash
+   npm run dev
+   # or
+   yarn dev
+   ```
+   Preview at <http://localhost:3000>.
 
-Replace npm with your package manager of choice. `npm`, `pnpm`, `yarn`, `bun`, etc
+---
 
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run dev:network`     | Starts local dev server on local network         |
-| `npm run sync`            | Generates TypeScript types for all Astro modules.|
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run preview:network` | Preview build on local network                   |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
-| `npm run lint`            | Run ESLint                                       |
-| `npm run lint:fix`        | Auto-fix ESLint issues                           |
+## 📦 Build & Deploy
 
-## 🏛️ License
+### Local build
+```bash
+npm run build
+# or
+yarn build
+```
+- Outputs static files to `dist/`.
 
-MIT
+### GitHub Actions (auto‑deploy)
+A workflow in `.github/workflows/deploy.yml` will:
+1. Install dependencies  
+2. Build the site  
+3. Publish the `dist/` folder to GitHub Pages (root of this repo’s `main` branch)
+
+> **Note:** You do *not* commit `node_modules/`; dependencies are installed on the runner.
+
+---
+
+## 📂 Repository Structure
+
+```text
+/
+├── .github/
+│   └── workflows/       # GitHub Actions for build & deploy
+├── public/              # Static assets (images, icons, robots.txt)
+├── src/
+│   ├── components/      # Reusable Astro/Vue/React components
+│   ├── layouts/         # Page layout templates
+│   ├── pages/           # Top‑level routes (index.astro, blog.astro, etc.)
+│   ├── content/         # Markdown/MDX collections: blog, projects, work
+│   └── lib/             # Utility functions (date formatting, constants)
+├── astro.config.mjs     # Astro configuration (site URL, base path)
+├── package.json
+├── tsconfig.json        # TypeScript settings
+└── README.md            # ← this file
+```
+
+---
+
+## 📫 Connect with Me
+
+- 📧 **Email:** miquelflorensa@polymtl.ca  
+- 💼 **LinkedIn:** [linkedin.com/in/miquelflorensa](https://linkedin.com/in/miquelflorensa)  
+- 🐦 **Twitter/X:** [@MiquelFlorensa](https://twitter.com/MiquelFlorensa)  
+- 📂 **GitHub:** [github.com/miquelflorensa](https://github.com/miquelflorensa)
+
+---
+
+*Built with ❤️ using Astro.*  
+```
