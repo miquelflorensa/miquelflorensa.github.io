@@ -1,3 +1,0 @@
-- [**Home**](/)
-- [About py/cuTAGI](about.md)  
-- [Our Team](team.md)
