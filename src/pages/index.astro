@@ -1,0 +1,172 @@
+---
+import { getCollection } from "astro:content";
+import Container from "@components/Container.astro";
+import PageLayout from "@layouts/PageLayout.astro";
+import ArrowCard from "@components/ArrowCard.astro";
+import Link from "@components/Link.astro";
+import { dateRange } from "@lib/utils";
+import { SITE, HOME, SOCIALS } from "@consts";
+
+const blog = (await getCollection("blog"))
+  .filter(post => !post.data.draft)
+  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
+  .slice(0, SITE.NUM_POSTS_ON_HOMEPAGE);
+
+const projects = (await getCollection("projects"))
+  .filter(project => !project.data.draft)
+  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
+  .slice(0, SITE.NUM_PROJECTS_ON_HOMEPAGE);
+
+const allwork = (await getCollection("work"))
+  .sort((a, b) => new Date(b.data.dateStart).valueOf() - new Date(a.data.dateStart).valueOf())
+  .slice(0, SITE.NUM_WORKS_ON_HOMEPAGE);
+
+const work = await Promise.all(
+  allwork.map(async (item) => {
+    const { Content } = await item.render();
+    return { ...item, Content };
+  })
+);
+---
+
+<PageLayout title={HOME.TITLE} description={HOME.DESCRIPTION}>
+  <Container>
+    <h2 class="animate font-semibold text-black dark:text-white text-3xl">
+      Hello there! I'm Miquel <span class="text-4xl">👋🏻🦖</span>
+    </h2>
+    <div class="space-y-16">
+      <section>
+        <article class="space-y-4">
+          <p class="animate">
+            I am a Ph.D. student at Polytechnique Montréal, working within the <a href="https://tagiml.com">BayesWorks</a> and <a href="https://www.polymtl.ca/litiv/en/research">LITIV</a> (Computer Vision) research groups. My primary research focuses on Diffusion Models integrated with Bayesian Neural Networks, combining probabilistic inference and deep learning to advance uncertainty quantification and generative modeling.
+          </p>
+          <p class="animate">
+            Beyond my academic work, I am deeply passionate about generative AI, computer vision, and robotics. I am constantly exploring how these fields can intersect to drive innovation in machine learning and its real-world applications.
+          </p>
+          <p class="animate">
+            In my free time, I enjoy diving into the world of science fiction, which fuels my imagination and inspires me to think about the future of technology.
+          </p>
+        </article>
+      </section>
+
+      <section class="animate space-y-6">
+        <div class="flex flex-wrap gap-y-2 items-center justify-between">
+          <h5 class="font-semibold text-black dark:text-white">
+            Latest posts
+          </h5>
+          <Link href="/blog">
+            See all posts
+          </Link>
+        </div>
+        <ul class="flex flex-col gap-4">
+          {blog.map(post => (
+            <li>
+              <ArrowCard entry={post} />
+            </li>
+          ))}
+        </ul>
+      </section>
+
+      <section class="animate space-y-6">
+        <div class="flex flex-wrap gap-y-2 items-center justify-between">
+          <h5 class="font-semibold text-black dark:text-white">
+            Recent projects
+          </h5>
+          <Link href="/projects">
+            See all projects
+          </Link>
+        </div>
+        <ul class="flex flex-col gap-4">
+          {projects.map(project => (
+            <li>
+              <ArrowCard entry={project} />
+            </li>
+          ))}
+        </ul>
+      </section>
+
+      <section id="education" class="animate space-y-6">
+        <h5 class="font-semibold text-black dark:text-white">Education</h5>
+        <ul class="space-y-4">
+          <li>
+            <div class="text-sm opacity-75">May 2025 – Present</div>
+            <div class="font-semibold text-black dark:text-white">Polytechnique Montréal, Ph.D. in Computer Engineering</div>
+            <ul class="list-disc list-inside">
+              <li>Bayesian neural network dynamics and probabilistic classification</li>
+              <li>CUDA kernel development for cuTAGI library</li>
+            </ul>
+          </li>
+          <li>
+            <div class="text-sm opacity-75">Jan 2024 – Apr 2025</div>
+            <div class="font-semibold text-black dark:text-white">Polytechnique Montréal, M.A.Sc. in Computer Engineering</div>
+            <ul class="list-disc list-inside">
+              <li>Mathematical formulation for uncertainty in Diffusion Models</li>
+              <li>C++/CUDA/Python development for cuTAGI</li>
+            </ul>
+          </li>
+          <li>
+            <div class="text-sm opacity-75">Sept 2019 – June 2023</div>
+            <div class="font-semibold text-black dark:text-white">Universitat Politècnica de Catalunya, B.S. in Computer Engineering</div>
+            <ul class="list-disc list-inside">
+              <li>Specialization in Computer Science</li>
+            </ul>
+          </li>
+        </ul>
+      </section>
+
+      <section id="skills-tools" class="space-y-6">
+        <h5 class="font-semibold text-black dark:text-white">Skills & Tools</h5>
+        <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
+          <div class="animate flex items-center bg-gray-200 dark:bg-gray-700 py-2 px-4 rounded-lg"><i class="fas fa-code text-blue-500 mr-2"></i>C++</div>
+          <div class="animate flex items-center bg-gray-200 dark:bg-gray-700 py-2 px-4 rounded-lg"><i class="fas fa-microchip text-red-500 mr-2"></i>CUDA</div>
+          <div class="animate flex items-center bg-gray-200 dark:bg-gray-700 py-2 px-4 rounded-lg"><i class="fab fa-python text-green-500 mr-2"></i>Python</div>
+          <div class="animate flex items-center bg-gray-200 dark:bg-gray-700 py-2 px-4 rounded-lg"><i class="fas fa-code text-yellow-500 mr-2"></i>C</div>
+          <div class="animate flex items-center bg-gray-200 dark:bg-gray-700 py-2 px-4 rounded-lg"><i class="fas fa-code text-purple-500 mr-2"></i>Haskell</div>
+          <div class="animate flex items-center bg-gray-200 dark:bg-gray-700 py-2 px-4 rounded-lg"><i class="fab fa-js text-yellow-500 mr-2"></i>JavaScript</div>
+
+          <div class="animate flex items-center bg-gray-200 dark:bg-gray-700 py-2 px-4 rounded-lg"><i class="fas fa-brain text-purple-500 mr-2"></i>PyTorch</div>
+          <div class="animate flex items-center bg-gray-200 dark:bg-gray-700 py-2 px-4 rounded-lg"><i class="fas fa-brain text-indigo-500 mr-2"></i>TensorFlow</div>
+          <div class="animate flex items-center bg-gray-200 dark:bg-gray-700 py-2 px-4 rounded-lg"><i class="fas fa-calculator text-blue-500 mr-2"></i>NumPy</div>
+          <div class="animate flex items-center bg-gray-200 dark:bg-gray-700 py-2 px-4 rounded-lg"><i class="fas fa-database text-teal-500 mr-2"></i>Pandas</div>
+          <div class="animate flex items-center bg-gray-200 dark:bg-gray-700 py-2 px-4 rounded-lg"><i class="fas fa-project-diagram text-orange-500 mr-2"></i>Scikit-learn</div>
+          <div class="animate flex items-center bg-gray-200 dark:bg-gray-700 py-2 px-4 rounded-lg"><i class="fas fa-eye text-blue-500 mr-2"></i>Computer Vision</div>
+          <div class="animate flex items-center bg-gray-200 dark:bg-gray-700 py-2 px-4 rounded-lg"><i class="fas fa-chart-line text-red-500 mr-2"></i>Probability & Statistics</div>
+          <div class="animate flex items-center bg-gray-200 dark:bg-gray-700 py-2 px-4 rounded-lg"><i class="fas fa-chart-bar text-green-500 mr-2"></i>Data Analysis</div>
+          <div class="animate flex items-center bg-gray-200 dark:bg-gray-700 py-2 px-4 rounded-lg"><i class="fas fa-chart-pie text-pink-500 mr-2"></i>Data Visualization</div>
+
+          <div class="animate flex items-center bg-gray-200 dark:bg-gray-700 py-2 px-4 rounded-lg"><i class="fab fa-git-alt text-orange-500 mr-2"></i>Git</div>
+          <div class="animate flex items-center bg-gray-200 dark:bg-gray-700 py-2 px-4 rounded-lg"><i class="fab fa-docker text-blue-600 mr-2"></i>Docker</div>
+          <div class="animate flex items-center bg-gray-200 dark:bg-gray-700 py-2 px-4 rounded-lg"><i class="fas fa-database text-indigo-500 mr-2"></i>PostgreSQL</div>
+          <div class="animate flex items-center bg-gray-200 dark:bg-gray-700 py-2 px-4 rounded-lg"><i class="fab fa-github text-black mr-2"></i>GitHub</div>
+          <div class="animate flex items-center bg-gray-200 dark:bg-gray-700 py-2 px-4 rounded-lg"><i class="fas fa-hands-helping text-yellow-500 mr-2"></i>Hugging Face</div>
+
+          <div class="animate flex items-center bg-gray-200 dark:bg-gray-700 py-2 px-4 rounded-lg"><i class="fas fa-eye text-blue-500 mr-2"></i>OpenCV</div>
+        </div>
+      </section>
+
+      <section class="animate space-y-4">
+        <h5 class="font-semibold text-black dark:text-white">
+          Let's Connect
+        </h5>
+        <article>
+          <p>If you want to get in touch, reach out on social media or send me an email.</p>
+        </article>
+        <ul class="flex flex-wrap gap-2">
+          {SOCIALS.map(SOCIAL => (
+            <li class="flex gap-x-2 text-nowrap">
+              <Link href={SOCIAL.HREF} external aria-label={`${SITE.NAME} on ${SOCIAL.NAME}`}>
+                {SOCIAL.NAME}
+              </Link>
+              {'/'}
+            </li>
+          ))}
+          <li class="line-clamp-1">
+            <Link href={`mailto:${SITE.EMAIL}`} aria-label={`Email ${SITE.NAME}`}>
+              {SITE.EMAIL}
+            </Link>
+          </li>
+        </ul>
+      </section>
+    </div>
+  </Container>
+</PageLayout>
