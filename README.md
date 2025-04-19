@@ -1,4 +1,3 @@
-```markdown
 # miquelflorensa.github.io
 
 > 👋 Hi, I’m Miquel Florensa—Ph.D. student in Computer Engineering at Polytechnique Montréal  
@@ -122,4 +121,3 @@ A workflow in `.github/workflows/deploy.yml` will:
 ---
 
 *Built with ❤️ using Astro.*  
-```
