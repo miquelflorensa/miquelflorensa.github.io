@@ -12,7 +12,7 @@ Deka et al. developed the *Approximate Gaussian Variance Inference* (AGVI), whic
 
 In this article we will see how AGVI works and how to apply it on TAGI, resulting in TAGI‑V. Then we will go through the implementation of TAGI‑V in the cuTAGI[^5] open source library. In case you don’t know about TAGI, go check the last blog where we explain step by step this method.
 
-<img src="/src/content/blog/01-tagi-v/images/heteros.jpg" alt="s" />
+<img src="/images/heteros.jpg" alt="s" />
 <figcaption class="text-center">Heteroscedastic representation, from Ideogram.</figcaption>
 
 ## AGVI
