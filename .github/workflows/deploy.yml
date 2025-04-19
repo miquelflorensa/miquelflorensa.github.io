@@ -1,30 +1,37 @@
+# .github/workflows/deploy.yml
 name: 🚀 Deploy Astro to GitHub Pages
 
 on:
   push:
-    branches: [ main ]
+    branches:
+      - main
   workflow_dispatch:
 
 permissions:
-  contents: read      # checkout
-  pages: write        # deploy
-  id-token: write     # for OIDC
+  contents: read      # to clone the repo
+  pages: write        # to publish Pages
+  id-token: write     # for OIDC token
 
 jobs:
   build_and_deploy:
     runs-on: ubuntu-latest
-    environment: github-pages
+    environment:
+      name: github-pages
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
 
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          cache: 'npm'
+
       - name: Install, build, and package Astro site
         uses: withastro/action@v4
-        # by default this:
-        #  • runs `npm ci` (or yarn)
-        #  • runs `npm run build`
-        #  • uploads ./dist as the Pages artifact
+        with:
+          package-manager: npm
 
       - name: Disable Jekyll
         run: echo > ./dist/.nojekyll
