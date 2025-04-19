@@ -1,0 +1,348 @@
+<!DOCTYPE html><html lang="en"> <head><!-- Global Metadata --><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><link rel="icon" type="image/svg+xml" href="/favicon-dark.svg" media="(prefers-color-scheme: dark)"><link rel="icon" type="image/svg+xml" href="/favicon-light.svg" media="(prefers-color-scheme: light)"><link rel="icon" type="image/x-icon" href="/favicon-light.svg"><meta name="generator" content="Astro v4.7.0"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/katex.css" integrity="sha384-WsHMgfkABRyG494OmuiNmkAOk8nhO1qE+Y6wns6v+EoNoTNxrWxYpl5ZYWFOLPCM" crossorigin="anonymous"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"><!-- Font preloads --><link rel="preload" href="/_astro/inter-latin-400-normal.BT1H-PT_.woff2" as="font" type="font/woff2" crossorigin><link rel="preload" href="/_astro/inter-latin-600-normal.B2Ssfs8e.woff2" as="font" type="font/woff2" crossorigin><link rel="preload" href="/_astro/lora-latin-400-normal.CvHVDnm4.woff2" as="font" type="font/woff2" crossorigin><link rel="preload" href="/_astro/lora-latin-600-normal.DUWh3m6k.woff2" as="font" type="font/woff2" crossorigin><!-- Canonical URL --><link rel="canonical" href="https://astro-nano-demo.vercel.app/projects/project-1/"><!-- Primary Meta Tags --><title>Quantifying Uncertainty in Visual Autoregressive Image Generation | Miquel Florensa Montilla</title><meta name="title" content="Quantifying Uncertainty in Visual Autoregressive Image Generation | Miquel Florensa Montilla"><meta name="description" content="A study on epistemic uncertainty in autoregressive image models using MC Dropout and semantic analysis."><!-- Open Graph / Facebook --><meta property="og:type" content="website"><meta property="og:url" content="https://astro-nano-demo.vercel.app/projects/project-1/"><meta property="og:title" content="Quantifying Uncertainty in Visual Autoregressive Image Generation | Miquel Florensa Montilla"><meta property="og:description" content="A study on epistemic uncertainty in autoregressive image models using MC Dropout and semantic analysis."><meta property="og:image" content="https://astro-nano-demo.vercel.app/nano.png"><!-- Twitter --><meta property="twitter:card" content="summary_large_image"><meta property="twitter:url" content="https://astro-nano-demo.vercel.app/projects/project-1/"><meta property="twitter:title" content="Quantifying Uncertainty in Visual Autoregressive Image Generation | Miquel Florensa Montilla"><meta property="twitter:description" content="A study on epistemic uncertainty in autoregressive image models using MC Dropout and semantic analysis."><meta property="twitter:image" content="https://astro-nano-demo.vercel.app/nano.png"><meta name="astro-view-transitions-enabled" content="true"><meta name="astro-view-transitions-fallback" content="animate"><script>
+  function init() {
+    preloadTheme();
+    onScroll();
+    animate();
+
+    const backToTop = document.getElementById("back-to-top");
+    backToTop?.addEventListener("click", (event) => scrollToTop(event));
+
+    const backToPrev = document.getElementById("back-to-prev");
+    backToPrev?.addEventListener("click", () => window.history.back());
+
+    const lightThemeButton = document.getElementById("light-theme-button");
+    lightThemeButton?.addEventListener("click", () => {
+      localStorage.setItem("theme", "light");
+      toggleTheme(false);
+    });
+
+    const darkThemeButton = document.getElementById("dark-theme-button");
+    darkThemeButton?.addEventListener("click", () => {
+      localStorage.setItem("theme", "dark");
+      toggleTheme(true);
+    });
+
+    const systemThemeButton = document.getElementById("system-theme-button");
+    systemThemeButton?.addEventListener("click", () => {
+      localStorage.setItem("theme", "system");
+      toggleTheme(window.matchMedia("(prefers-color-scheme: dark)").matches);
+    });
+
+    window.matchMedia("(prefers-color-scheme: dark)")
+      .addEventListener("change", event => {
+        if (localStorage.theme === "system") {
+          toggleTheme(event.matches);
+        }
+      }
+    );
+
+    document.addEventListener("scroll", onScroll);
+  }
+
+  function animate() {
+    const animateElements = document.querySelectorAll(".animate");
+
+    animateElements.forEach((element, index) => {
+      setTimeout(() => {
+        element.classList.add("show");
+      }, index * 150);
+    });
+  }
+
+  function onScroll() {
+    if (window.scrollY > 0) {
+      document.documentElement.classList.add("scrolled");
+    } else {
+      document.documentElement.classList.remove("scrolled");
+    }
+  }
+
+  function scrollToTop(event) {
+    event.preventDefault();
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth"
+    });
+  }
+
+function toggleTheme(dark) {
+    const css = document.createElement("style");
+
+    css.appendChild(
+      document.createTextNode(
+        `* {
+             -webkit-transition: none !important;
+             -moz-transition: none !important;
+             -o-transition: none !important;
+             -ms-transition: none !important;
+             transition: none !important;
+          }
+        `,
+      )
+    );
+
+    document.head.appendChild(css);
+
+    if (dark) {
+      document.documentElement.classList.add("dark");
+    } else {
+      document.documentElement.classList.remove("dark");
+    }
+
+  window.getComputedStyle(css).opacity;
+    document.head.removeChild(css);
+  }
+
+  function preloadTheme() {
+    const userTheme = localStorage.theme;
+
+    if (userTheme === "light" || userTheme === "dark") {
+      toggleTheme(userTheme === "dark");
+    } else {
+      toggleTheme(window.matchMedia("(prefers-color-scheme: dark)").matches);
+    }
+  }
+
+  document.addEventListener("DOMContentLoaded", () => init());
+  document.addEventListener("astro:after-swap", () => init());
+  preloadTheme();
+</script><link rel="stylesheet" href="/_astro/_slug_.CFWCYhFv.css"><script type="module" src="/_astro/hoisted.Dx3_EBnS.js"></script></head> <body> <header> <div class="mx-auto max-w-screen-md px-5">  <div class="flex flex-wrap gap-y-2 justify-between"> <a href="/" target="_self" class="inline-block decoration-black/15 dark:decoration-white/30 hover:decoration-black/25 hover:dark:decoration-white/50 text-current hover:text-black hover:dark:text-white transition-colors duration-300 ease-in-out">  <div class="font-semibold"> Miquel Florensa Montilla </div>  </a> <nav class="flex gap-1"> <a href="/blog" target="_self" class="inline-block decoration-black/15 dark:decoration-white/30 hover:decoration-black/25 hover:dark:decoration-white/50 text-current hover:text-black hover:dark:text-white transition-colors duration-300 ease-in-out underline underline-offset-2"> 
+blog
+ </a> <span> / </span> <a href="/work" target="_self" class="inline-block decoration-black/15 dark:decoration-white/30 hover:decoration-black/25 hover:dark:decoration-white/50 text-current hover:text-black hover:dark:text-white transition-colors duration-300 ease-in-out underline underline-offset-2"> 
+work
+ </a> <span> / </span> <a href="/projects" target="_self" class="inline-block decoration-black/15 dark:decoration-white/30 hover:decoration-black/25 hover:dark:decoration-white/50 text-current hover:text-black hover:dark:text-white transition-colors duration-300 ease-in-out underline underline-offset-2"> 
+projects
+ </a> </nav> </div>  </div> </header> <main>  <div class="mx-auto max-w-screen-md px-5">  <div class="animate"> <a href="/projects" class="relative group w-fit flex pl-7 pr-3 py-1.5 flex-nowrap rounded border border-black/15 dark:border-white/20 hover:bg-black/5 dark:hover:bg-white/5 hover:text-black dark:hover:text-white transition-colors duration-300 ease-in-out"> <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="absolute top-1/2 left-2 -translate-y-1/2 size-4 stroke-2 fill-none stroke-current"> <line x1="5" y1="12" x2="19" y2="12" class="translate-x-2 group-hover:translate-x-0 scale-x-0 group-hover:scale-x-100 transition-transform duration-300 ease-in-out"></line> <polyline points="12 5 5 12 12 19" class="translate-x-1 group-hover:translate-x-0 transition-transform duration-300 ease-in-out"></polyline> </svg> <div class="text-sm"> 
+Back to projects
+ </div> </a> </div> <div class="space-y-1 my-10"> <div class="animate flex items-center gap-1.5"> <div class="font-base text-sm"> <time datetime="2025-04-19T04:00:00.000Z"> Apr 19, 2025 </time> </div>
+&bull;
+<div class="font-base text-sm"> 6 min read </div> </div> <div class="animate text-2xl font-semibold text-black dark:text-white"> Quantifying Uncertainty in Visual Autoregressive Image Generation </div>  </div> <article class="animate"> <h2 id="summary">Summary</h2>
+<p>In this work, I develop and compare two autoregressive image generators—VAR and VAR‑CLIP—implement Monte Carlo Dropout at inference to obtain pixel‑wise uncertainty maps, and analyze how uncertainty correlates with generation fidelity, semantic regions, and prompt design. VAR leverages coarse‑to‑fine “next‑scale prediction” to achieve state‑of‑the‑art FID and Inception Score<sup><a href="#user-content-fn-1" id="user-content-fnref-1" data-footnote-ref="" aria-describedby="footnote-label">1</a></sup><sup><a href="#user-content-fn-4" id="user-content-fnref-4" data-footnote-ref="" aria-describedby="footnote-label">2</a></sup>, while VAR‑CLIP incorporates CLIP text embeddings for rich semantic conditioning<sup><a href="#user-content-fn-2" id="user-content-fnref-2" data-footnote-ref="" aria-describedby="footnote-label">3</a></sup><sup><a href="#user-content-fn-8" id="user-content-fnref-8" data-footnote-ref="" aria-describedby="footnote-label">4</a></sup>. Enabling dropout during sampling reveals a clear fidelity–confidence trade‑off: as DropPath rate increases, FID worsens and average σ rises<sup><a href="#user-content-fn-3" id="user-content-fnref-3" data-footnote-ref="" aria-describedby="footnote-label">5</a></sup><sup><a href="#user-content-fn-4" id="user-content-fnref-4-2" data-footnote-ref="" aria-describedby="footnote-label">2</a></sup>. Masking with SAM shows lower uncertainty over foreground objects than backgrounds<sup><a href="#user-content-fn-7" id="user-content-fnref-7" data-footnote-ref="" aria-describedby="footnote-label">6</a></sup>, and prompt complexity experiments uncover a non‑linear peak in σ at moderate ambiguity<sup><a href="#user-content-fn-6" id="user-content-fnref-6" data-footnote-ref="" aria-describedby="footnote-label">7</a></sup>. Detailed captions both improve image quality and reduce uncertainty, demonstrating the importance of prompt clarity<sup><a href="#user-content-fn-5" id="user-content-fnref-5" data-footnote-ref="" aria-describedby="footnote-label">8</a></sup>.</p>
+<hr>
+<h2 id="var">VAR</h2>
+<p><img src="/images/VAR.png" alt="VAR Architecture"></p>
+<p>I implement VAR by framing image synthesis as a multi‑scale prediction task, where at each resolution the model predicts the next finer-scale image tokens in an autoregressive fashion<sup><a href="#user-content-fn-1" id="user-content-fnref-1-2" data-footnote-ref="" aria-describedby="footnote-label">1</a></sup>. This coarse‑to‑fine transformer architecture allows VAR to learn visual distributions efficiently and surpass diffusion models on ImageNet 256×256 benchmarks<sup><a href="#user-content-fn-1" id="user-content-fnref-1-3" data-footnote-ref="" aria-describedby="footnote-label">1</a></sup><sup><a href="#user-content-fn-9" id="user-content-fnref-9" data-footnote-ref="" aria-describedby="footnote-label">9</a></sup>.</p>
+<hr>
+<h2 id="varclip">VAR‑CLIP</h2>
+<p><img src="/images/VAR-CLIP_2.png" alt="VAR‑CLIP Architecture"></p>
+<p>Building on VAR’s backbone, VAR‑CLIP feeds CLIP text embeddings as conditioning context at every scale. Captions are encoded by a pre‑trained CLIP model into a fixed‑length vector, which guides token prediction to yield semantically aligned outputs across diverse prompts<sup><a href="#user-content-fn-2" id="user-content-fnref-2-2" data-footnote-ref="" aria-describedby="footnote-label">3</a></sup><sup><a href="#user-content-fn-8" id="user-content-fnref-8-2" data-footnote-ref="" aria-describedby="footnote-label">4</a></sup><sup><a href="#user-content-fn-10" id="user-content-fnref-10" data-footnote-ref="" aria-describedby="footnote-label">10</a></sup>.</p>
+<hr>
+<h2 id="mc-dropout">MC Dropout</h2>
+<p><img src="/images/MC_Dropout_VAR-CLIP.drawio.png" alt="MC Dropout Illustration"></p>
+<p>To approximate Bayesian inference, I activate dropout layers during inference and perform multiple forward passes per prompt. Aggregating 50 samples per seed, I compute pixel‑wise standard deviations (σ) as epistemic uncertainty estimates without modifying training regimes<sup><a href="#user-content-fn-3" id="user-content-fnref-3-2" data-footnote-ref="" aria-describedby="footnote-label">5</a></sup>.</p>
+<hr>
+<h2 id="experiments-with-tables-and-images">Experiments with Tables and Images</h2>
+<h3 id="performanceuncertainty-tradeoff">Performance–Uncertainty Trade‑off</h3>
+<p>For the prompt “Belgian shepherd,” I sweep DropPath rates and record FID, Inception Score (IS), Central Moment Discrepancy (CMMD), and average σ:</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>DropPath Rate</th><th>FID ↓</th><th>IS ↑</th><th>CMMD ↓</th><th>σ</th></tr></thead><tbody><tr><td>0.05</td><td>18.54</td><td>78.32 ± 1.73</td><td>4.357</td><td>0.1927</td></tr><tr><td>0.10</td><td>18.98</td><td>73.11 ± 1.31</td><td>4.384</td><td>0.2107</td></tr><tr><td>0.20</td><td>22.68</td><td>64.13 ± 1.91</td><td>4.536</td><td>0.2198</td></tr><tr><td>0.30</td><td>30.57</td><td>51.82 ± 0.91</td><td>4.833</td><td>0.2259</td></tr></tbody></table>
+<p><img src="/images/exp2.png" alt="DropPath Experiment"></p>
+<p>As dropout increases, generation quality degrades (higher FID, lower IS) while uncertainty rises, illustrating the fidelity–confidence trade‑off<sup><a href="#user-content-fn-4" id="user-content-fnref-4-3" data-footnote-ref="" aria-describedby="footnote-label">2</a></sup><sup><a href="#user-content-fn-5" id="user-content-fnref-5-2" data-footnote-ref="" aria-describedby="footnote-label">8</a></sup>.</p>
+<h3 id="regionspecific-confidence">Region‑Specific Confidence</h3>
+<p>Using SAM to segment “Golden retriever” images, I compare foreground and background uncertainty:</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Region</th><th>σ</th></tr></thead><tbody><tr><td>Object</td><td>0.1975</td></tr><tr><td>Background</td><td>0.1993</td></tr></tbody></table>
+<div style="display: flex; gap: 1rem; justify-content: space-between; align-items: flex-start;">
+  <figure style="flex: 1; text-align: center; margin: 0;">
+    <img src="/images/object.png" alt="Object Uncertainty Map" style="max-width: 100%; height: auto;">
+    <figcaption>Figure a: Object Uncertainty Map</figcaption>
+  </figure>
+  <figure style="flex: 1; text-align: center; margin: 0;">
+    <img src="/images/background.png" alt="Background Uncertainty Map" style="max-width: 100%; height: auto;">
+    <figcaption>Figure b: Background Uncertainty Map</figcaption>
+  </figure>
+</div>
+<p>Foreground regions exhibit slightly lower σ, indicating higher confidence in semantically salient areas<sup><a href="#user-content-fn-7" id="user-content-fnref-7-2" data-footnote-ref="" aria-describedby="footnote-label">6</a></sup>.</p>
+<h3 id="semantic-entanglement">Semantic Entanglement</h3>
+<p>I generate images for prompts with one, two, or three concepts and measure uncertainty:</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Concepts</th><th>FID ↓</th><th>IS ↑</th><th>CMMD ↓</th><th>σ</th></tr></thead><tbody><tr><td>1</td><td>18.54</td><td>78.32 ± 1.73</td><td>4.357</td><td>0.1927</td></tr><tr><td>2</td><td>35.96</td><td>31.53 ± 0.52</td><td>4.381</td><td>0.1955</td></tr><tr><td>3</td><td>47.99</td><td>21.16 ± 0.43</td><td>4.528</td><td>0.1924</td></tr></tbody></table>
+<div style="display: flex; gap: 1rem; justify-content: space-between;">
+  <figure style="flex: 1; text-align: center; margin: 0;">
+    <img src="/images/fox.png" alt="Arctic fox" style="width: 100%; max-width: 200px; height: auto;">
+    <figcaption>Figure 1: “Arctic fox”</figcaption>
+  </figure>
+  <figure style="flex: 1; text-align: center; margin: 0;">
+    <img src="/images/fox_teddy.png" alt="Arctic fox or teddy" style="width: 100%; max-width: 200px; height: auto;">
+    <figcaption>Figure 2: “Arctic fox or teddy”</figcaption>
+  </figure>
+  <figure style="flex: 1; text-align: center; margin: 0;">
+    <img src="/images/fox_piggy_schooner.png" alt="Arctic fox or piggy bank or schooner" style="width: 100%; max-width: 200px; height: auto;">
+    <figcaption>Figure 3: “Arctic fox or piggy bank or schooner”</figcaption>
+  </figure>
+</div>
+<p>Uncertainty peaks at two concepts, reflecting maximum semantic ambiguity before dilution<sup><a href="#user-content-fn-6" id="user-content-fnref-6-2" data-footnote-ref="" aria-describedby="footnote-label">7</a></sup>.</p>
+<h3 id="prompt-descriptiveness">Prompt Descriptiveness</h3>
+<p>Comparing a simple caption against a richly descriptive one:</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Prompt Type</th><th>FID ↓</th><th>IS ↑</th><th>CMMD ↓</th><th>σ</th></tr></thead><tbody><tr><td>Simple</td><td>18.54</td><td>78.32 ± 1.73</td><td>4.357</td><td>0.1927</td></tr><tr><td>Complex</td><td>15.14</td><td>103.49 ± 1.55</td><td>3.785</td><td>0.1794</td></tr></tbody></table>
+<div style="display: flex; gap: 1rem; justify-content: space-between; align-items: flex-start;">
+  <figure style="flex: 1; text-align: center; margin: 0;">
+    <img src="/images/spider.png" alt="Black widow" style="max-width: 100%; height: auto;">
+    <figcaption>Figure c: “Black widow”</figcaption>
+  </figure>
+  <figure style="flex: 1; text-align: center; margin: 0;">
+    <img src="/images/spider_complex.png" alt="A black and red spider with red eyes" style="max-width: 100%; height: auto;">
+    <figcaption>Figure d: “A black and red spider with red eyes”</figcaption>
+  </figure>
+</div>
+<p>Descriptive prompts both boost fidelity and reduce uncertainty, underscoring the value of unambiguous guidance<sup><a href="#user-content-fn-5" id="user-content-fnref-5-3" data-footnote-ref="" aria-describedby="footnote-label">8</a></sup>.</p>
+<hr>
+<h2 id="conclusions">Conclusions</h2>
+<ul>
+<li><strong>VAR vs VAR‑CLIP:</strong> VAR excels in raw fidelity, while VAR‑CLIP enhances semantic alignment at the cost of higher baseline uncertainty<sup><a href="#user-content-fn-1" id="user-content-fnref-1-4" data-footnote-ref="" aria-describedby="footnote-label">1</a></sup><sup><a href="#user-content-fn-2" id="user-content-fnref-2-3" data-footnote-ref="" aria-describedby="footnote-label">3</a></sup>.</li>
+<li><strong>MC Dropout:</strong> A practical Bayesian approximation that reveals how dropout rates shape the fidelity–confidence trade‑off<sup><a href="#user-content-fn-3" id="user-content-fnref-3-3" data-footnote-ref="" aria-describedby="footnote-label">5</a></sup>.</li>
+<li><strong>Semantic Relevance:</strong> SAM‑based masking confirms greater confidence in salient regions<sup><a href="#user-content-fn-7" id="user-content-fnref-7-3" data-footnote-ref="" aria-describedby="footnote-label">6</a></sup>.</li>
+<li><strong>Prompt Design:</strong> Both complexity and descriptiveness critically influence uncertainty, with moderate ambiguity peaking σ and detailed captions minimizing it<sup><a href="#user-content-fn-5" id="user-content-fnref-5-4" data-footnote-ref="" aria-describedby="footnote-label">8</a></sup><sup><a href="#user-content-fn-6" id="user-content-fnref-6-3" data-footnote-ref="" aria-describedby="footnote-label">7</a></sup>.</li>
+</ul>
+<hr>
+<h2 id="references">References</h2>
+<section data-footnotes="" class="footnotes"><h2 class="sr-only" id="footnote-label">Footnotes</h2>
+<ol>
+<li id="user-content-fn-1">
+<p>Keyu Tian, Yi Jiang, Zehuan Yuan, Bingyue Peng, Liwei Wang. “Visual Autoregressive Modeling: Scalable Image Generation via Next-Scale Prediction.” NeurIPS 2024 <a href="https://arxiv.org/abs/2404.02905">[arXiv:2404.02905]</a>. <a href="#user-content-fnref-1" data-footnote-backref="" aria-label="Back to reference 1" class="data-footnote-backref">↩</a> <a href="#user-content-fnref-1-2" data-footnote-backref="" aria-label="Back to reference 1-2" class="data-footnote-backref">↩<sup>2</sup></a> <a href="#user-content-fnref-1-3" data-footnote-backref="" aria-label="Back to reference 1-3" class="data-footnote-backref">↩<sup>3</sup></a> <a href="#user-content-fnref-1-4" data-footnote-backref="" aria-label="Back to reference 1-4" class="data-footnote-backref">↩<sup>4</sup></a></p>
+</li>
+<li id="user-content-fn-4">
+<p>Martin Heusel, Hubert Ramsauer, Thomas Unterthiner, Bernhard Nessler, Sepp Hochreiter. “GANs Trained by a Two Time-Scale Update Rule Converge to a Local Nash Equilibrium.” NeurIPS 2017 <a href="https://arxiv.org/abs/1706.08500">[arXiv:1706.08500]</a>. <a href="#user-content-fnref-4" data-footnote-backref="" aria-label="Back to reference 2" class="data-footnote-backref">↩</a> <a href="#user-content-fnref-4-2" data-footnote-backref="" aria-label="Back to reference 2-2" class="data-footnote-backref">↩<sup>2</sup></a> <a href="#user-content-fnref-4-3" data-footnote-backref="" aria-label="Back to reference 2-3" class="data-footnote-backref">↩<sup>3</sup></a></p>
+</li>
+<li id="user-content-fn-2">
+<p>Qian Zhang, Xiangzi Dai, Ninghua Yang, Xiang An, Ziyong Feng, Xingyu Ren. “VAR‑CLIP: Text-to-Image Generator with Visual Auto-Regressive Modeling.” arXiv:2408.01181 (2024). <a href="#user-content-fnref-2" data-footnote-backref="" aria-label="Back to reference 3" class="data-footnote-backref">↩</a> <a href="#user-content-fnref-2-2" data-footnote-backref="" aria-label="Back to reference 3-2" class="data-footnote-backref">↩<sup>2</sup></a> <a href="#user-content-fnref-2-3" data-footnote-backref="" aria-label="Back to reference 3-3" class="data-footnote-backref">↩<sup>3</sup></a></p>
+</li>
+<li id="user-content-fn-8">
+<p>Alec Radford, Jong Wook Kim, Chris Hallacy, Aditya Ramesh, Gabriel Goh, Sandhini Agarwal, Girish Sastry, Amanda Askell, Pamela Mishkin, Jack Clark, Gretchen Krueger, Ilya Sutskever. “Learning Transferable Visual Models From Natural Language Supervision.” arXiv:2103.00020 (2021). <a href="#user-content-fnref-8" data-footnote-backref="" aria-label="Back to reference 4" class="data-footnote-backref">↩</a> <a href="#user-content-fnref-8-2" data-footnote-backref="" aria-label="Back to reference 4-2" class="data-footnote-backref">↩<sup>2</sup></a></p>
+</li>
+<li id="user-content-fn-3">
+<p>Yarin Gal, Zoubin Ghahramani. “Dropout as a Bayesian Approximation: Representing Model Uncertainty in Deep Learning.” ICML 2016 <a href="https://arxiv.org/abs/1506.02142">[arXiv:1506.02142]</a>. <a href="#user-content-fnref-3" data-footnote-backref="" aria-label="Back to reference 5" class="data-footnote-backref">↩</a> <a href="#user-content-fnref-3-2" data-footnote-backref="" aria-label="Back to reference 5-2" class="data-footnote-backref">↩<sup>2</sup></a> <a href="#user-content-fnref-3-3" data-footnote-backref="" aria-label="Back to reference 5-3" class="data-footnote-backref">↩<sup>3</sup></a></p>
+</li>
+<li id="user-content-fn-7">
+<p>Alexander Kirillov, Eric Mintun, Nikhila Ravi, Hanzi Mao, Chloe Rolland, Laura Gustafson, Tete Xiao, Spencer Whitehead, Alexander C. Berg, Wan‑Yen Lo, Piotr Dollár, Ross Girshick. “Segment Anything.” ICCV 2023 <a href="https://arxiv.org/abs/2304.02643">[arXiv:2304.02643]</a>. <a href="#user-content-fnref-7" data-footnote-backref="" aria-label="Back to reference 6" class="data-footnote-backref">↩</a> <a href="#user-content-fnref-7-2" data-footnote-backref="" aria-label="Back to reference 6-2" class="data-footnote-backref">↩<sup>2</sup></a> <a href="#user-content-fnref-7-3" data-footnote-backref="" aria-label="Back to reference 6-3" class="data-footnote-backref">↩<sup>3</sup></a></p>
+</li>
+<li id="user-content-fn-6">
+<p>Werner Zellinger, Thomas Grubinger, Edwin Lughofer, Thomas Natschläger, Susanne Saminger-Platz. “Central Moment Discrepancy for Domain-Invariant Representation Learning.” ICLR 2017 <a href="https://arxiv.org/abs/1702.08811">[arXiv:1702.08811]</a>. <a href="#user-content-fnref-6" data-footnote-backref="" aria-label="Back to reference 7" class="data-footnote-backref">↩</a> <a href="#user-content-fnref-6-2" data-footnote-backref="" aria-label="Back to reference 7-2" class="data-footnote-backref">↩<sup>2</sup></a> <a href="#user-content-fnref-6-3" data-footnote-backref="" aria-label="Back to reference 7-3" class="data-footnote-backref">↩<sup>3</sup></a></p>
+</li>
+<li id="user-content-fn-5">
+<p>Tim Salimans, Ian Goodfellow, Wojciech Zaremba, Vicki Cheung, Alec Radford, Xi Chen. “Improved Techniques for Training GANs.” NIPS 2016 <a href="https://arxiv.org/abs/1606.03498">[arXiv:1606.03498]</a>. <a href="#user-content-fnref-5" data-footnote-backref="" aria-label="Back to reference 8" class="data-footnote-backref">↩</a> <a href="#user-content-fnref-5-2" data-footnote-backref="" aria-label="Back to reference 8-2" class="data-footnote-backref">↩<sup>2</sup></a> <a href="#user-content-fnref-5-3" data-footnote-backref="" aria-label="Back to reference 8-3" class="data-footnote-backref">↩<sup>3</sup></a> <a href="#user-content-fnref-5-4" data-footnote-backref="" aria-label="Back to reference 8-4" class="data-footnote-backref">↩<sup>4</sup></a></p>
+</li>
+<li id="user-content-fn-9">
+<p>FoundationVision. “VAR GitHub Repository.” GitHub (2024), <a href="https://github.com/FoundationVision/VAR">https://github.com/FoundationVision/VAR</a>. <a href="#user-content-fnref-9" data-footnote-backref="" aria-label="Back to reference 9" class="data-footnote-backref">↩</a></p>
+</li>
+<li id="user-content-fn-10">
+<p>daixiangzi. “VAR‑CLIP GitHub Repository.” GitHub (2024), <a href="https://github.com/daixiangzi/VAR-CLIP">https://github.com/daixiangzi/VAR-CLIP</a>. <a href="#user-content-fnref-10" data-footnote-backref="" aria-label="Back to reference 10" class="data-footnote-backref">↩</a></p>
+</li>
+</ol>
+</section> </article>  </div>  </main> <footer class="animate"> <div class="mx-auto max-w-screen-md px-5">  <div class="relative"> <div class="absolute right-0 -top-20"> <button id="back-to-top" class="relative group w-fit flex pl-8 pr-3 py-1.5 flex-nowrap rounded border border-black/15 dark:border-white/20 hover:bg-black/5 dark:hover:bg-white/5 hover:text-black dark:hover:text-white transition-colors duration-300 ease-in-out"> <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="absolute top-1/2 left-2 -translate-y-1/2 size-4 stroke-2 fill-none stroke-current rotate-90"> <line x1="5" y1="12" x2="19" y2="12" class="translate-x-2 group-hover:translate-x-0 scale-x-0 group-hover:scale-x-100 transition-transform duration-300 ease-in-out"></line> <polyline points="12 5 5 12 12 19" class="translate-x-1 group-hover:translate-x-0 transition-transform duration-300 ease-in-out"></polyline> </svg> <div class="text-sm">
+Back to top
+</div> </button> </div> </div> <div class="flex justify-between items-center"> <div>
+&copy; 2025 | Miquel Florensa Montilla </div> <div class="flex flex-wrap gap-1 items-center"> <button id="light-theme-button" aria-label="Light theme" class="group size-8 flex items-center justify-center rounded-full"> <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="group-hover:stroke-black group-hover:dark:stroke-white transition-colors duration-300 ease-in-out"> <circle cx="12" cy="12" r="5"></circle> <line x1="12" y1="1" x2="12" y2="3"></line> <line x1="12" y1="21" x2="12" y2="23"></line> <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line> <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line> <line x1="1" y1="12" x2="3" y2="12"></line> <line x1="21" y1="12" x2="23" y2="12"></line> <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line> <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line> </svg> </button> <button id="dark-theme-button" aria-label="Dark theme" class="group size-8 flex items-center justify-center rounded-full"> <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="group-hover:stroke-black group-hover:dark:stroke-white transition-colors duration-300 ease-in-out"> <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path> </svg> </button> <button id="system-theme-button" aria-label="System theme" class="group size-8 flex items-center justify-center rounded-full"> <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="group-hover:stroke-black group-hover:dark:stroke-white transition-colors duration-300 ease-in-out"> <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect> <line x1="8" y1="21" x2="16" y2="21"></line> <line x1="12" y1="17" x2="12" y2="21"></line> </svg> </button> </div> </div>  </div> </footer> </body></html>
