@@ -1,4 +1,4 @@
-import type { Site, Metadata, Socials } from "@types";
+import type { Site, Metadata, Socials, Presentation } from "@types";
 
 export const SITE: Site = {
   NAME: "Miquel Florensa Montilla",
@@ -27,6 +27,21 @@ export const PROJECTS: Metadata = {
   TITLE: "Projects",
   DESCRIPTION: "A collection of my projects, with links to repositories and demos.",
 };
+
+export const PRESENTATIONS_PAGE: Metadata = {
+  TITLE: "Presentations",
+  DESCRIPTION: "Slides from my seminars and presentations.",
+};
+
+export const PRESENTATIONS: Presentation[] = [
+  {
+    TITLE: "Cap-free Batch Update for TAGI",
+    VENUE: "Seminar, Polytechnique Montréal",
+    DATE: "2026-10-29",
+    DESCRIPTION: "One step length, measured from the step itself.",
+    SLIDES: "/presentations/capfree-tagi/capfree_talk.html",
+  },
+];
 
 export const SOCIALS: Socials = [
   { 

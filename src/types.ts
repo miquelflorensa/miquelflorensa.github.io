@@ -15,3 +15,11 @@ export type Socials = {
   NAME: string;
   HREF: string;
 }[];
+
+export type Presentation = {
+  TITLE: string;
+  VENUE: string;
+  DATE: string;
+  DESCRIPTION: string;
+  SLIDES: string;
+};

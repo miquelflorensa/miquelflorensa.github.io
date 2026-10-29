@@ -4,7 +4,13 @@
     "strictNullChecks": true,
     "baseUrl": ".",
     "paths": {
-      "@*": ["./src/*"]
+      "@*": [
+        "./src/*"
+      ]
     }
-  }
+  },
+  "exclude": [
+    "dist",
+    "public"
+  ]
 }
