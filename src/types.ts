@@ -18,7 +18,7 @@ export type Socials = {
 
 export type Presentation = {
   TITLE: string;
-  VENUE: string;
+  VENUE: { en: string; ca: string };
   DATE: string;
   DESCRIPTION: string;
   SLIDES: string;

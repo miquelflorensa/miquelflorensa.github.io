@@ -1,12 +1,14 @@
 ---
 import type { Presentation } from "@types";
+import { PRESENTATIONS_TEXT, type Lang } from "@i18n";
 
 type Props = {
   presentation: Presentation;
+  lang?: Lang;
 }
 
-const { presentation } = Astro.props;
-const date = new Date(presentation.DATE).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric", timeZone: "UTC" });
+const { presentation, lang = "en" } = Astro.props;
+const date = new Date(presentation.DATE).toLocaleDateString(PRESENTATIONS_TEXT[lang].dateLocale, { month: "short", day: "numeric", year: "numeric", timeZone: "UTC" });
 ---
 
 <a href={presentation.SLIDES} class="relative group flex flex-nowrap py-3 px-4 pr-10 rounded-lg border border-black/15 dark:border-white/20 hover:bg-black/5 dark:hover:bg-white/5 hover:text-black dark:hover:text-white transition-colors duration-300 ease-in-out">
@@ -15,7 +17,7 @@ const date = new Date(presentation.DATE).toLocaleDateString("en-US", { month: "s
       {presentation.TITLE}
     </div>
     <div class="text-sm">
-      {presentation.VENUE} · {date}
+      {presentation.VENUE[lang]} · {date}
     </div>
     <div class="text-sm">
       {presentation.DESCRIPTION}

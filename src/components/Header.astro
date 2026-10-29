@@ -2,38 +2,63 @@
 import Container from "@components/Container.astro";
 import Link from "@components/Link.astro";
 import { SITE } from "@consts";
+import { NAV_TEXT, type Lang } from "@i18n";
+
+type Props = {
+  lang?: Lang;
+}
+
+const { lang = "en" } = Astro.props;
+const t = NAV_TEXT[lang];
+const home = lang === "ca" ? "/ca" : "/";
+const presentations = lang === "ca" ? "/ca/presentacions" : "/presentations";
+
+// Pages that exist in both languages switch to their counterpart; everything else goes to the other homepage.
+const path = Astro.url.pathname.replace(/\/$/, "");
+const counterpart: Record<string, string> = {
+  "": "/ca",
+  "/ca": "/",
+  "/presentations": "/ca/presentacions",
+  "/ca/presentacions": "/presentations",
+};
+const other = counterpart[path] ?? (lang === "ca" ? "/" : "/ca");
 ---
 
 <header>
   <Container>
     <div class="flex flex-wrap gap-y-2 justify-between">
-      <Link href="/" underline={false}>
+      <Link href={home} underline={false}>
         <div class="font-semibold">
           {SITE.NAME}
         </div>
       </Link>
-      <nav class="flex gap-1">
+      <nav class="flex flex-wrap gap-1">
         <Link href="/blog">
-          blog
+          {t.blog}
         </Link>
         <span>
           {`/`}
         </span>
         <Link href="/work">
-          work
+          {t.work}
         </Link>
         <span>
           {`/`}
         </span>
         <Link href="/projects">
-          projects
+          {t.projects}
         </Link>
         <span>
           {`/`}
         </span>
-        <Link href="/presentations">
-          presentations
+        <Link href={presentations}>
+          {t.presentations}
         </Link>
+        <span class="ml-3">
+          {lang === "en" ? <span class="font-semibold">EN</span> : <Link href={other} underline={false}>EN</Link>}
+          {` · `}
+          {lang === "ca" ? <span class="font-semibold">CA</span> : <Link href={other} underline={false}>CA</Link>}
+        </span>
       </nav>
     </div>
   </Container>

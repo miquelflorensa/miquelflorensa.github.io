@@ -28,15 +28,10 @@ export const PROJECTS: Metadata = {
   DESCRIPTION: "A collection of my projects, with links to repositories and demos.",
 };
 
-export const PRESENTATIONS_PAGE: Metadata = {
-  TITLE: "Presentations",
-  DESCRIPTION: "Slides from my seminars and presentations.",
-};
-
 export const PRESENTATIONS: Presentation[] = [
   {
     TITLE: "Cap-free Batch Update for TAGI",
-    VENUE: "Seminar, Polytechnique Montréal",
+    VENUE: { en: "Seminar, Polytechnique Montréal", ca: "Seminari, Polytechnique Montréal" },
     DATE: "2026-10-29",
     DESCRIPTION: "One step length, measured from the step itself.",
     SLIDES: "/presentations/capfree-tagi/capfree_talk.html",
